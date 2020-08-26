@@ -7,8 +7,8 @@ import 'package:google_maps_webservice/directions.dart' as APIDirections;
 
 class MapUtil{
 
-  final directions = APIDirections.GoogleMapsDirections(apiKey: 'AIzaSyAnwXVUtvdT1yxcALkHzZAeCWq8O6AYAkE');
-  final geolocation = APIGeolocation.GoogleMapsGeolocation(apiKey: 'AIzaSyAnwXVUtvdT1yxcALkHzZAeCWq8O6AYAkE');
+  final directions = APIDirections.GoogleMapsDirections(apiKey: '');
+  final geolocation = APIGeolocation.GoogleMapsGeolocation(apiKey: '');
 
   Future<LatLng> getCurrentLocation() async{
     LatLng currentLocation;
