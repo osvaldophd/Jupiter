@@ -1,0 +1,23 @@
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBTdw3m2nPK_ExxIr-8fM_IG5IzjBXH694",
+    authDomain: "boleia-app-f2dd4.firebaseapp.com",
+    databaseURL: "https://boleia-app-f2dd4.firebaseio.com",
+    projectId: "boleia-app-f2dd4",
+    storageBucket: "boleia-app-f2dd4.appspot.com",
+    messagingSenderId: "499723497488",
+    appId: "1:499723497488:web:7469ba5b76d650afb69a95",
+    measurementId: "G-W0Z4RX8DE9"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
