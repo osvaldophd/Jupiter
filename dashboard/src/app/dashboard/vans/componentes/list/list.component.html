@@ -1,0 +1,28 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div *ngIf="!loading">
+  <h1 class="title-page text-dark" style="margin-top: -60px;">Todas as Vans</h1>
+  <div class="row animated fadeIn">
+    <div class="card-group">
+      <div *ngFor="let v of van" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="card">
+          <div class="card--img">
+            <img class="card-img-top" src="{{api_path}}{{v.imagem}}">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title ">{{v.modelo.marca.nome}}</h5>
+            <p class="card-subtitle">{{v.modelo.nome}}</p>
+            <strong>{{v.matricula}}</strong>
+            <p class="card-text">{{v.descricao}}</p>
+          </div>
+          <div class="card-footer bg-warning">
+            <a [routerLink]="['list', v.id]" class="btn btn-primary" class="btn btn-block">Detalhes
+              da Van</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

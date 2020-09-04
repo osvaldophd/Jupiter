@@ -1,0 +1,39 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div *ngIf="!loading" class="row">
+
+  <div class="col-md-6">
+    <div>
+      <ul class="list-group">
+        <li class="list-group-item bbg-secondary bcolor-white ">Todas as Marcas</li>
+        <li *ngFor="let xmarcas of listAllMarcas" class="list-group-item d-flex justify-content-between">
+          {{xmarcas.nome}}
+          <button type="button" (click)="delete(xmarcas)" class="close " aria-label="Close">
+            <span class="pe-7s-trash bcolor-secondary" ></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6 ">
+    <div class="container bg-white pb-4">
+      <ul class="row list-group">
+        <li class="list-group-item bbg-secondary bcolor-white bborder-radius-none">Adicionar Marca de Van</li>
+      </ul>
+      <form [formGroup]="formaddmarca" class="px-2" (ngSubmit)="createMarca()">
+        <div class="form-group mt-4">
+          <label for="exampleInputEmail1 ">Marca</label>
+          <input formControlName="nome" type="email" class="form-control" placeholder="Informe o nome marca">
+          <div *ngIf="(nome.touched) &&  nome.invalid" class="">
+            <div class="color-error" *ngIf="nome.errors.required">
+              Campo Obrigatório. Informe uma marca
+            </div>
+          </div>
+        </div>
+        <button type="submit" [disabled]="!formaddmarca.valid" class="btn btn-success bborder-radius-none mt-4">Adicionar Marca</button>
+      </form>
+    </div>
+  </div>
+
+</div>

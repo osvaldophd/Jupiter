@@ -1,0 +1,277 @@
+<div class="section-page jbg-sinza">
+    <section class="container">
+        <h1 class="h3 jcolor-secondary mb-5 text-center">Minha Conta</h1>
+        <div class="row justify-content-center">
+
+            <div *ngIf="formedit; else dadosusuario" class="col-md-12">
+                <div class="jbg-white p-5">
+                    <button class="btn-fechar-form" (click)="editarUsuario(false)">
+                        x
+                    </button>
+
+
+                    <form class="row" [formGroup]="formgroup" (ngSubmit)="update()" enctype="multipart/form-data">
+                        <div class="col-12">
+                            <div class="row justify-content-center mb-4 pb-2">
+                                <div class="col-md-12 text-center">
+                                    <img class="rounded-circle" src="{{ usuarioPhotoEdit }}" alt="" width="170px"
+                                        height="170px">
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="msg" class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                                <strong>Sucesso!</strong> os seus dados foram actualizados!
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Nome</label>
+                                <input
+                                    [ngClass]="{ 'form-msg-errors-input': (f.nome.errors?.required == true) && ((f.nome.dirty == true) || (f.nome.touched == true))  }"
+                                    formControlName="nome" type="text" id="company" placeholder="Insira o Nome"
+                                    class="form-control">
+                                <div class="form-msg-errors"
+                                    *ngIf="(f.nome.errors?.required == true) && ((f.nome.dirty == true) || (f.nome.touched == true))">
+                                    *Campo Obrigatório. Informe o seu nome.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Nacionalidade</label>
+                                <input
+                                    [ngClass]="{ 'form-msg-errors-input': (f.nacionalidade.errors?.required == true) && ((f.nacionalidade.dirty == true) || (f.nacionalidade.touched == true))  }"
+                                    formControlName="nacionalidade" type="text" id="company" placeholder="Insira o Nome"
+                                    class="form-control">
+                                <div class="form-msg-errors"
+                                    *ngIf="(f.nacionalidade.errors?.required == true) && ((f.nacionalidade.dirty == true) || (f.nacionalidade.touched == true))">
+                                    *Campo Obrigatório. Informe a sua nacionalidade.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Genero</label>
+                                <select formControlName="genero" class="form-control">
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Nº BI / Passaport</label>
+                                <input
+                                    [ngClass]="{ 'form-msg-errors-input': (f.nr_bi.errors?.required == true) && ((f.nr_bi.dirty == true) || (f.nr_bi.touched == true))  }"
+                                    formControlName="nr_bi" type="text" id="company" placeholder="Insira o Nome"
+                                    class="form-control">
+                                <div class="form-msg-errors"
+                                    *ngIf="(f.nr_bi.errors?.required == true) && ((f.nr_bi.dirty == true) || (f.nr_bi.touched == true))">
+                                    *Campo Obrigatório.
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="btn btn-rounded btn-primary px-5 mt-4">Salvar </button>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="form-group">
+                                <span class="form-control-label  d-block mb-2">Foto de Perfil</span>
+
+                                <div class="row">
+                                    <label for="foto" class="col-2 icon-form-file">
+                                        <svg for="foto" width="30px" height="30px"
+                                            enable-background="new 0 0 488.455 488.455" viewBox="0 0 488.455 488.455"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="m287.4 216.32c23.845 23.845 23.845 62.505 0 86.35s-62.505 23.845-86.35 0-23.845-62.505 0-86.35 62.505-23.845 86.35 0" />
+                                            <path
+                                                d="m427.4 91.581h-42.187l-30.544-61.059h-220.91l-30.515 61.089-42.127 0.075c-33.585 0.06-60.925 27.429-60.954 61.029l-0.164 244.14c0 33.675 27.384 61.074 61.059 61.074h366.34c33.675 0 61.059-27.384 61.059-61.059v-244.24c-1e-3 -33.674-27.385-61.058-61.059-61.058zm-183.18 290.03c-67.335 0-122.12-54.783-122.12-122.12s54.783-122.12 122.12-122.12 122.12 54.783 122.12 122.12-54.783 122.12-122.12 122.12z" />
+                                        </svg>
+                                    </label>
+                                    <input class="col-10 pl-0 form-control-file file-img-upload"
+                                        formControlName="imagem" (change)="readphoto($event.target.files)" type="file"
+                                        id="foto" placeholder="Alterar photo de perfil">
+                                </div>
+
+                            </div>
+
+                            <div formGroupName="morada">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="company" class=" form-control-label">Municipio</label>
+                                            <select 
+                                            [ngClass]="{ 'form-msg-errors-input': (f.morada.controls.municipio_id.errors?.required == true) && ((f.morada.controls.municipio_id.dirty == true) || (f.morada.controls.municipio_id.touched == true))  }"
+                                            class="form-control" formControlName="municipio_id">
+                                                <option value="1">Luanda</option>
+                                                <option value="2">Maianga</option>
+                                                <option value="3">Belas</option>
+                                                <option value="4">Talatona</option>
+                                                <option value="5">Kilamba Kiaxi</option>
+                                                <option value="6">Viana</option>
+                                            </select>
+                                            <div class="form-msg-errors"
+                                                *ngIf="(f.morada.controls.municipio_id.errors?.required == true) && ((f.morada.controls.municipio_id.dirty == true) || (f.morada.controls.municipio_id.touched == true))">
+                                                *Campo Obrigatório.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="vat" class=" form-control-label">Bairro</label>
+                                            <input  [ngClass]="{ 'form-msg-errors-input': (f.morada.controls.bairro.errors?.required == true) && ((f.morada.controls.bairro.dirty == true) || (f.morada.controls.bairro.touched == true))  }"
+                                            type="text" id="bairro" formControlName="bairro" placeholder="Bairro"
+                                                class="form-control">
+                                            <div class="form-msg-errors"
+                                                *ngIf="(f.morada.controls.bairro.errors?.required == true) && ((f.morada.controls.bairro.dirty == true) || (f.morada.controls.bairro.touched == true))">
+                                                *Campo Obrigatório.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="street" class=" form-control-label">Rua</label>
+                                            <input formControlName="rua" type="text" id="street"
+                                                placeholder="Insira o Numero da Rua" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="house" class=" form-control-label">Nº Casa</label>
+                                            <input formControlName="numero_casa" type="text" id="house"
+                                                placeholder="Insira Numeri da Casa" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Email</label>
+                                <input
+                                    [ngClass]="{ 'form-msg-errors-input': (f.email.errors?.required == true) && ((f.email.dirty == true) || (f.email.touched == true))  }"
+                                    formControlName="email" type="text" id="company" placeholder="Insira o Nome"
+                                    class="form-control">
+                                <div class="form-msg-errors"
+                                    *ngIf="(f.email.errors?.required == true) && ((f.email.dirty == true) || (f.email.touched == true))">
+                                    *Campo Obrigatório. Informe o seu email.
+                                </div>
+                            </div>
+
+                            <div formArrayName="contactos" class="form-group">
+                                <label for="company" class=" form-control-label">Telefone</label>
+                                <div class="row itens-align-start">
+                                    <div class="col-10">
+                                        <div *ngFor="let contacto of contacto.controls; let i = index" class="mb-2">
+                                            <div formGroupName="{{i}}">
+                                                <div>
+
+                                                    <input
+                                                        [ngClass]="{ 'form-msg-errors-input': (f.contactos.controls[i].controls.contacto.errors?.required == true) && ((f.contactos.controls[i].dirty == true) || (f.contactos.controls[i].touched == true)) }"
+                                                        formControlName="contacto" type="text" id="company"
+                                                        placeholder="Insira o Numero do Telefone" class="form-control"
+                                                        [textMask]="{mask: mask.telefone}">
+                                                    <span *ngIf="i > 0" (click)="removeContacto(i)"
+                                                        class="btn-remove-contact fas fa-trash"></span>
+                                                        
+                                                    <input formControlName="tipo" type="hidden" value="Telefone">
+                                                    <div *ngIf="(f.contactos.controls[i].controls.contacto.errors?.required == true ) && ((f.contactos.controls[i].controls.contacto.dirty == true) || (f.contactos.controls[i].controls.contacto.touched == true))"
+                                                        class="text-danger form-msg-errors">
+                                                        *Campo obrigatório. Informe o numero de telefone
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="col-2 plus-phone-buttom">
+                                            <span style="font-size: 2.2em; cursor: pointer;" (click)="addContacto()"
+                                                span class="fas fa-plus"></span>
+                                               
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <ng-template #dadosusuario>
+
+                <div class="col-6 mt-2">
+
+
+                    <div class="card cad-user-profile" style="width: 100%;">
+                        <img class="card-img-top rounded-circle mr-auto ml-auto mb-5" src="{{ usuarioPhoto }}"
+                            alt="Card image cap">
+                        <div class="card-body cad-user-profile-body px-5">
+                            <h5 class="h3 card-title jcolor-primary mt-2 ">{{ usuario.funcionario.nome }}</h5>
+                            <p>Nacionalidade: {{ usuario.funcionario.nacionalidade }}</p>
+                            <p>Data de Nascimento: {{ usuario.funcionario.data_nascimento }}</p>
+                            <p>Genero: {{ (usuario.funcionario.genero == 'M')? 'Masculino' : 'Femenino' }} </p>
+                            <p>BI / Passaporte: {{ usuario.funcionario.nr_bi }}</p>
+                            <hr>
+                            <p class="card-text"><i class="fas fa-envelope" aria-hidden="true"></i> {{ usuario.email }}
+                            </p>
+                            <p class="card-text"> <i class="fas fa-home"></i>
+                                Bairro {{ usuario.funcionario.morada.bairro }} rua {{ usuario.funcionario.morada.rua }}
+                                Casa nº {{ usuario.funcionario.morada.n_casa }}</p>
+                            <ng-template *ngIf="usuario.funcionario">
+                                <div *ngFor="let contactos of usuario.funcionario.contactos">
+                                    {{ contactos.contacto }}
+                                </div>
+                            </ng-template>
+
+                            <p class="card-text">{{ usuario.contacto }}</p>
+                        </div>
+                    </div>
+                    <button class="cad-user-profile-pen" (click)="editarUsuario(true)">
+                        <svg width="278.08px" height="278.08px" enable-background="new 0 0 278.084 278.084"
+                            version="1.1" viewBox="0 0 278.084 278.084" xml:space="preserve"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="m11.782 276.83l83.185-32.258c9.5-3.687 23.041-12.508 30.24-19.714l142.94-142.93c13.252-13.253 13.252-34.744 0-47.99l-24.002-24.002c-13.246-13.252-34.737-13.252-47.99 0l-142.93 142.93c-7.206 7.206-16.03 20.747-19.714 30.24l-32.257 83.184c-3.678 9.5 1.039 14.213 10.532 10.533z" />
+                        </svg>
+                    </button>
+                </div>
+            </ng-template>
+
+
+
+            <!--             
+            <div class="col-10 row">
+                <div class="col-4 card-user-profile">
+                    <img class="w-100"
+                        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80">
+                </div>
+                <div class="col-8">
+
+                    <ul class="list-group list-group-flush ">
+                        <li class="list-group-item list-group-item-action active">Manuel Domingos Duarte</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <button class="btn btn-primary mt-4"> Editar Conta </button>
+                </div>
+            </div> -->
+
+        </div>
+
+
+    </section>
+</div>

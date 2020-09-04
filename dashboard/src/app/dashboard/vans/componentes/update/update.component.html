@@ -1,0 +1,115 @@
+
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div *ngIf="!loading">
+
+  <h1 class="title-page text-dark" style="margin-top: -60px;">Editar Van</h1>
+  <div class="col-12 list-users bg-white pt-3">
+  
+    <div class="">
+      <form class="row" [formGroup]="form" (ngSubmit)="update()" enctype="multipart/form-data">
+        <div class="col-lg-6">
+          <div class="">
+            <div class="card-body card-block">
+              <div formGroupName="modelo">
+                <div class="form-group">
+                  <label for="vat" class=" form-control-label">Marca</label>
+                  <select formControlName="marca_id" class="form-control" name="" id=""
+                    (change)="selectMarca($event.target.value)">
+                    <option *ngFor="let xmarcas of listamarcas" value="{{xmarcas.id }}"> {{xmarcas.nome}} </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="vat" class=" form-control-label">Modelo</label>
+                  <select formControlName="id" id="" class="form-control">
+                    <option *ngFor="let xmodelos of listamodelos" value="{{xmodelos.id }}"> {{xmodelos.nome}} </option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="form-group">
+                <label for="country" class=" form-control-label">Matricula</label>
+                <input formControlName="matricula" name="matricula" id="country" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="nr_ocupantes" class=" form-control-label">Nº de ocupantes</label>
+                <input formControlName="nr_ocupantes" name="nr_ocupantes" id="nr_ocupantes" class="form-control"
+                [ngClass]="{ 'form-msg-errors-input': (fv.nr_ocupantes.errors?.required == true) && ((fv.nr_ocupantes.dirty == true) || (fv.nr_ocupantes.touched == true))  }">
+                <div class="text-danger form-msg-errors"
+                  *ngIf="(fv.nr_ocupantes.errors?.required == true) && ((fv.nr_ocupantes.dirty == true) || (fv.nr_ocupantes.touched == true))">
+                  *Campo obrigatório. Informe o numero de ocupantes
+                </div>
+              </div>
+  
+              <div class="form-group">
+                <label for="vat" class=" form-control-label">Descrição</label>
+                <textarea formControlName="descricao" class="form-control" name="" id="" cols="30" rows="3"></textarea>
+              </div>
+  
+              <button type="submit" [disabled]="!form.valid" class="btn btn-lg btn-success mt-3 ">Guardar</button>
+            </div>
+  
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="">
+            <div class="card-body card-block">
+  
+              <div formArrayName="contactos" class="form-group">
+                <label for="company" class=" form-control-label">Telefone</label>
+                <div class="row itens-align-start">
+                  <div class="col-10">
+                    <div *ngFor="let contacto of contacto.controls; let i = index" class="mb-2">
+                      <div formGroupName="{{i}}">
+                        <div>
+                          <input
+                          [ngClass]="{ 'form-msg-errors-input': (fv.contactos?.controls[i].controls.contacto.errors?.required == true) && ((fv.contactos?.controls[i].dirty == true) || (fv?.contactos.controls[i].touched == true)) }"
+                          formControlName="contacto" type="text" id="company"
+                            placeholder="Insira o Numero do Telefone"  class="form-control"
+                            [textMask]="{mask: mask.telefone}">
+                            <span *ngIf="i > 0" (click)="removeContacto(i)" class="btn-remove-contact pe-7s-close"></span>
+                            <div *ngIf="(fv.contactos?.controls[i].controls.contacto.errors?.required == true ) && ((fv.contactos?.controls[i].controls.contacto.dirty == true) || (fv.contactos?.controls[i].controls.contacto.touched == true))" class="text-danger form-msg-errors">
+                                *Campo obrigatório. Informe o numero de telefone
+                            </div>
+                 
+                        </div>
+      
+      
+                      </div>
+                    </div>
+      
+                  </div>
+      
+                  <div class="col-2">
+                    <div class="col-2 plus-phone-buttom">
+                      <span style="font-size: 2.2em; cursor: pointer;" (click)="addContacto()" span
+                        class="pe-7s-plus"></span>
+                    </div>
+                  </div>
+                </div>
+      
+              </div>
+  
+              <div class="form-group">
+                <span class="mt-2 d-block h5">Foto da Van</span>
+                <div class="form-vans-photo d-block text-center">
+                  <img src="{{(fileImg)? fileImg : defaultImg }}" alt="Alterar Foto">
+                  <label for="file" class="pe-7s-cloud-upload vans-btn-upload-file"></label>
+                  <input type="file" class="custom-file-input vans-input-upload-file" id="file"
+                    aria-describedby="Foto do motorista" formControlName="imagem" (change)="readphoto($event.target.files)">
+      
+                </div>
+      
+      
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div>
+  
+      </div>
+  
+    </div>
+</div>

@@ -1,0 +1,77 @@
+
+
+.van-showcase{
+    
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    width: 500px;
+    height: 300px;
+
+    img{
+    align-self: center;
+      width: 100%;       
+    }
+}
+
+.vans-list{
+
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    padding:  100px 10px;
+
+    article.card{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        
+        width: 250px;
+        margin: 20px;
+        box-shadow: 0 0 3px $fourth-alpha;
+        border-radius: 10px; 
+        transition: .5s ease-in-out;
+
+        &:hover{
+            transform: scale(1.2);
+            box-shadow: 0 0 20px $fourth-alpha;
+        }
+        header.card-header{
+            height: 150px;
+            margin-bottom:  20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid $fourth-alpha;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .card-body{
+            margin-bottom:  10px;
+            padding: 10px;
+            
+            h2{
+                font-size: 1.2em;
+                margin-bottom:  20px;
+            }
+
+            h3{
+                font-size: 1em;
+                font-weight: 300;
+                margin-bottom:  20px;
+            }
+
+            p{
+                font-size: 1em;
+                margin-bottom:  20px;
+            }
+        }
+
+    }
+}

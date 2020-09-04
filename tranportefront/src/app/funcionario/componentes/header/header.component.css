@@ -1,0 +1,12 @@
+
+.logo-marca{
+  width: 172px;
+  height: auto;
+}
+.navbar-login {
+    background-color: #fff;
+    box-shadow: 1px 0px 4px #c7c5c5;
+}
+.navbar-login a, .active {
+  color: #BA1720 !important;
+}

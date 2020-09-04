@@ -1,0 +1,27 @@
+.datepicker-form {
+  float: right;
+  text-align: right;
+}
+
+.format-field-date {
+  color: #746d6d;
+  border: 2px solid #939393;
+  background-color: #f6f6f6 !important;
+  padding: 5px 10px;
+  text-align: center;
+  cursor: pointer;
+  padding-top: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+.format-field-date-icon {
+  padding: 5px;
+  font-size: 1.5rem;
+  margin-bottom: -18px;
+  padding-top: -14px;
+  margin-top: -38px;
+  margin-right: 5px;
+  cursor: pointer;
+
+}

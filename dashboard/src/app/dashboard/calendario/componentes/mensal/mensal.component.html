@@ -1,0 +1,8 @@
+<div *ngIf="loading">
+    <app-loading></app-loading>
+</div>
+<div *ngIf="!loading" class="container">
+    <full-calendar [buttonText]="buttonText" [buttonIcons]="buttonIcons" [plugins]="calendaryPlugin" [weekends]="true"
+        [events]="calendarEvents" (click)="handleDateClick($event)" locale="pt" style="height: 50vh !important">
+    </full-calendar>
+</div>

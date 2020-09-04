@@ -1,0 +1,155 @@
+<!-- <div *ngIf="loading" class="mt-5 pt-5" style="margin-top: 200px !important;">
+  <app-loading class="mt-5"></app-loading>
+</div>
+<div *ngIf="!loading" class="content">
+  <h1 class="title-page text-dark pl-4">Relatórios</h1>
+  <div class="container">
+
+    <div  class="row">
+
+        <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Veiculos</h5>
+              <p class="card-text"> <strong class="text-success">{{total}} </strong> veiculos cadastrados</p>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Modelos</h5>
+              <p class="card-text"> <strong class="text-success">{{vans.length}}</strong> modelos cadastrados</p>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Viagens</h5>
+              <p class="card-text"> <strong class="text-success">{{viagens.length}}</strong> viagens realizadas</p>
+              </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h4>Veiculos</h4>
+        <hr>
+      </div>
+
+      <div class="col-4" *ngFor="let v of vans">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{v.nome}}</h5>
+            <p class="card-text"> Quantidade de viaturas: <strong>{{v.qtd}}</strong></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+          <h4>Viagens</h4>
+          <hr>
+        </div>
+
+        <div class="col-4" *ngFor="let vi of viagens ">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{vi.nome}}</h5>
+              <p class="card-text"> Quantidade de viagens: <strong>{{vi.qtd}}</strong></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+
+</div> -->
+
+
+<div class="container mt-5 pt-5">
+
+  <div class="row">
+
+    <div class="col-12 my-5">
+      <div class="row justify-content-between">
+        <div class="col-4 h3">Relatórios</div>
+        <div class="col-3">
+          <div class="datepicker-form">
+
+              <input type="text" id="formInput" class="from-control format-field-date" name="daterangeInput"
+              daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
+              <label for="formInput">
+                <i  class="format-field-date-icon fa fa-calendar" aria-hidden="true"></i>
+              </label>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="h3">Viagens </div>
+
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Quantidade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let viagem of viagens">
+            <th>{{viagem.name}}</th>
+            <td>{{viagem.viagem}}</td>
+          </tr>
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td>24</td>
+          </tr>
+        </tfoot>
+      </table>
+
+
+
+    </div>
+    <div class="col-8">
+      <div class="h3">Motoristas</div>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Total de Viagens</th>
+            <th scope="col">Total de Viagens Analisadas</th>
+            <th scope="col">Avaliação Média</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let motorista of motoristas">
+            <th scope="row">{{motorista.name}}</th>
+            <td>{{motorista.viagens}}</td>
+            <td>{{motorista.viagensAnalisadas}}</td>
+            <td>{{motorista.avalicaoM}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,14 @@
+.content-table {
+
+    min-height: 600px !important;
+}
+
+.active {
+    background-color:#ba1720;
+    color: #fff !important;
+}
+
+.title-paginator {
+    padding: 0.5em 1.2em 0.2em 0;
+    color: #ba1720;
+}

@@ -1,0 +1,15 @@
+.btn-fechar-form {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    margin-top: -17px;
+    border-radius: 100%;
+    background-color: #BA1720;
+    color: #fff;
+    
+}
+
+.icon-form-file { margin-left: 0; }
+.file-img-upload { margin-left: -20px; }

@@ -1,14 +1,3 @@
-{
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Flutter",
-      "request": "launch",
-      "type": "dart",
-      "program": "./example/lib/main.dart"
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:54293ac79115168c986b8a79544ffeb24420a9437186a6f8597e60d708bf689c
+size 376

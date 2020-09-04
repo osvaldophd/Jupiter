@@ -1,0 +1,340 @@
+<h1 class="title-page text-dark" style="margin-top: -60px;">Todas as Vans</h1>
+<div class="container">
+  <div class="row">
+    <!-- <div class="col-4">
+      <ul class="list-group mb-2" *ngFor="let viagem of viagens">
+        <li class="list-group-item disabled">
+          <img width="100px" height="100px"
+        src="{{api}}{{viagem.motorista.imagem}}"
+            alt="..." class="rounded-circle">
+          <span class="pl-3">
+            <strong>
+              {{viagem.usuario.nome}}
+            </strong>
+          </span>
+
+          <ul class="list-group list-group-flush mt-2">
+            <li class="list-group-item">Data da viagem: {{viagem.created_at | date}}</li>
+            <li class="list-group-item">Avaliação: {{viagem.avaliacao}}</li>
+            <li class="list-group-item">Motoria: {{viagem.motorista.nome}}</li>
+            <li class="list-group-item">Transporte: {{ viagem.van.matricula}} | {{viagem.van.ano_aquisicao}} |
+              {{viagem.van.descricao}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div> -->
+    <div class="col-12">
+      <div class="card pb-0">
+
+        <div class="card-body pb-0">
+          <form class="pt-2" (submit)="search(searchForm.value)" [formGroup]="searchForm">
+            <div class="row">
+
+              <div class="col">
+                <div class="form-group">
+                  <input type="search" class="form-control" formControlName="nomeMotorista"
+                    placeholder="Nome do Motorista">
+                </div>
+              </div>
+              <div class="col" *ngIf="filtros.nomeUsuario === true">
+                <div class="form-group">
+                  <input type="search" class="form-control" formControlName="nomeUsuario" id="search"
+                    placeholder="Nome do Passageiro">
+                </div>
+              </div>
+              <div class="col col-2">
+                <div class="btn-group">
+                  <button type="button" class="btn"> <i class="fa fa-filter text-dark"></i> Filtros</button>
+                  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-item">Filtrar por</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="form-check dropdown-item">
+                      <input class="form-check-input" type="checkbox" [checked]="filtros.nomeMotorista"
+                        name="nomeMotorista" id="motorista" (change)="setFilter($event.target)">
+                      <label class="form-check-label" for="motorista">
+                        Motorista
+                      </label>
+                    </div>
+                    <div class="form-check dropdown-item">
+                      <input class="form-check-input" type="checkbox" [checked]="filtros.nomeUsuario" name="nomeUsuario"
+                        id="passageiro" (change)="setFilter($event.target)">
+                      <label class="form-check-label" for="passageiro">
+                        Passageiro
+                      </label>
+                    </div>
+                    <div class="form-check dropdown-item">
+                      <input class="form-check-input" type="checkbox" name="idVan" id="idVan"
+                        (change)="setFilter($event.target)">
+                      <label class="form-check-label" for="idVan">
+                        Transporte
+                      </label>
+                    </div>
+                    <!-- <div class="form-check dropdown-item">
+                  <input class="form-check-input" type="checkbox" name="latitude" id="latitude" (change) = "setFilter($event.target)">
+                  <label class="form-check-label" for="latitude">
+                    Latitude
+                  </label>
+                </div>
+                <div class="form-check dropdown-item">
+                  <input class="form-check-input" type="checkbox" name="longitude" id="longitude" (change) = "setFilter($event.target)">
+                  <label class="form-check-label" for="longitude">
+                    Longitude
+                  </label>
+                </div> -->
+                    <div class="form-check dropdown-item">
+                      <input class="form-check-input" type="checkbox" id="dataI" name="dataInicio"
+                        (change)="setFilter($event.target)">
+                      <label class="form-check-label" for="dataI">
+                        Data de Início
+                      </label>
+                    </div>
+                    <div class="form-check dropdown-item">
+                      <input class="form-check-input" type="checkbox" id="dataF" name="dataFim"
+                        (change)="setFilter($event.target)">
+                      <label class="form-check-label" for="dataF">
+                        Data de Termino
+                      </label>
+                    </div>
+                    <div class="form-check dropdown-item">
+                      <input class="form-check-input" type="checkbox" id="dataViagem" name="data"
+                        (change)="setFilter($event.target)">
+                      <label class="form-check-label" for="dataViagem">
+                        Data da Viagem
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col col-2">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-success btn-block">Pesquisar</button>
+                </div>
+              </div>
+
+              <div class="col col-12">
+                <div class="row">
+                  <div class="form-group col" *ngIf="filtros.idVan === true">
+                    <select class="form-control" formControlName="idVan" id="van">
+                      <option [disabled]="true">Selecione a van</option>
+                      <ng-container *ngFor="let van of vans">
+                        <option [value]="van.id">{{van.modelo.nome}} {{van.matricula}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+
+                  <!-- <div class="form-group col">
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Latitude">
+                </div>
+                <div class="form-group col">
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Longitude">
+                </div> -->
+                  <div class="form-group col" *ngIf="filtros.dataInicio === true">
+                    <input type="date" class="form-control" formControlName="dataInicio" aria-describedby="emailHelp"
+                      data-placeholder="Data do Início da Viagem" required aria-required="true">
+
+                  </div>
+                  <div class="form-group col" *ngIf="filtros.dataFim">
+                    <input type="date" class="form-control" formControlName="dataFim" aria-describedby="emailHelp"
+                      data-placeholder="Data do Fim da Viagem" required aria-required="true">
+                  </div>
+                  <div class="form-group col" *ngIf="filtros.data">
+                    <input type="date" class="form-control" id="dataV" formControlName="data"
+                      data-placeholder="Date of birth" data-placeholder="Data da Viagem" required aria-required="true">
+                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+      <div *ngIf="loading">
+        <app-loading></app-loading>
+      </div>
+      <div *ngIf="!loading">
+        <div class="alert alert-success d-flex flex-row align-content-center" role="alert"
+          *ngIf="serachStatus === true">
+          <span>A pesquisa retomou {{count}} resultado (s)</span>
+          <button class="btn align-self-end"><i class="fa fa-times-circle text-dark"
+              (click)="serachStatus = false"></i></button>
+        </div>
+
+        <table class="table" *ngIf="!serachStatus == true">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Motorista</th>
+              <th scope="col">Viajante</th>
+              <th scope="col">Matricula</th>
+              <th scope="col">Data</th>
+              <th scpo="col">Estado da viagem</th>
+              <th scope="col">Avaliação</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let viagem of viagens; let i = index" data-toggle="modal" data-target=".modal-map">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{viagem.motorista?.nome}}</td>
+              <td>{{viagem.usuario?.nome}}</td>
+              <td>{{viagem.van?.matricula}}</td>
+
+              <td>{{viagem?.created_at | date}}</td>
+              <td>
+                <span *ngIf="viagem?.viagem_terminada === 0">Em curso</span>
+                <span *ngIf="viagem?.viagem_terminada === 1">Concluído</span>
+              </td>
+              <td *ngIf="viagem.avaliacao === 0 || viagem.avaliacao === []">
+                <span class="fa fa-star text-warning ml-1"> Ainda Não Existe uma avaliação</span>
+              </td>
+              <td *ngIf="viagem.avaliacao === 1">
+                <i class="fa fa-star text-warning ml-1"></i>
+              </td>
+              <td *ngIf="viagem.avaliacao === 2">
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+              </td>
+              <td *ngIf="viagem.avaliacao === 3">
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+              </td>
+              <td *ngIf="viagem.avaliacao === 4">
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+              </td>
+              <td *ngIf="viagem.avaliacao === 5">
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+                <i class="fa fa-star text-warning ml-1"></i>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+        <table class="table" *ngIf="serachStatus == true">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Motorista</th>
+              <th scope="col">Viajante</th>
+              <th scope="col">Matricula</th>
+              <th scope="col">Data</th>
+              <th scpo="col">Estado da viagem</th>
+              <th scope="col">Avaliação</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr *ngIf="!resultPesquisa">
+                <td colspan="6" class="text-center py-5 my-5 h3">Não foi encontrados resultados da pesquisa!</td>
+              </tr>
+          
+              <ng-template ngIf="resultPesquisa">
+                <tr  *ngFor="let viagem of viagens; let i = index" data-toggle="modal" data-target=".modal-map">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{viagem.motorista?.nome}}</td>
+                  <td>{{viagem.usuario?.nome}}</td>
+                  <td>{{viagem.van?.matricula}}</td>
+    
+                  <td>{{viagem?.created_at | date}}</td>
+                  <td>
+                    <span *ngIf="viagem?.viagem_terminada === 0">Em curso</span>
+                    <span *ngIf="viagem?.viagem_terminada === 1">Concluído</span>
+                  </td>
+                  <td *ngIf="viagem.avaliacao === 0 || viagem.avaliacao === []">
+                    <span class="fa fa-star text-warning ml-1"> Ainda Não Existe uma avaliação</span>
+                  </td>
+                  <td *ngIf="viagem.avaliacao === 1">
+                    <i class="fa fa-star text-warning ml-1"></i>
+                  </td>
+                  <td *ngIf="viagem.avaliacao === 2">
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                  </td>
+                  <td *ngIf="viagem.avaliacao === 3">
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                  </td>
+                  <td *ngIf="viagem.avaliacao === 4">
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                  </td>
+                  <td *ngIf="viagem.avaliacao === 5">
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                    <i class="fa fa-star text-warning ml-1"></i>
+                  </td>
+                </tr>
+
+              </ng-template>
+              
+ 
+
+
+
+
+
+          </tbody>
+        </table>
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+
+    <div class="modal fade modal-map" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="card">
+            <div class="card-body">
+
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3941.750956612099!2d13.187360615022854!3d-8.902729993812473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x1a51f56792705ff3%3A0x445022584052d72b!2sMELELVIS%2C%20LDA!3m2!1d-8.901968499999999!2d13.1838219!4m5!1s0x1a51f4d9a0206c4b%3A0x438827167f770b4a!2sAcademia%20BAI%20(SAESP)!3m2!1d-8.9042247!2d13.1885894!5e0!3m2!1spt-PT!2sao!4v1580399456359!5m2!1spt-PT!2sao"
+                width="100%" height="600" frameborder="0" style="border:0;" allowfullscreen="">
+              </iframe>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+        
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3941.750956612099!2d13.187360615022854!3d-8.902729993812473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x1a51f56792705ff3%3A0x445022584052d72b!2sMELELVIS%2C%20LDA!3m2!1d-8.901968499999999!2d13.1838219!4m5!1s0x1a51f4d9a0206c4b%3A0x438827167f770b4a!2sAcademia%20BAI%20(SAESP)!3m2!1d-8.9042247!2d13.1885894!5e0!3m2!1spt-PT!2sao!4v1580399456359!5m2!1spt-PT!2sao"
+            width="100%" height="600" frameborder="0" style="border:0;" allowfullscreen="">
+          </iframe>
+          
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div *ngIf="loading">
+	<app-loading></app-loading>
+</div>
+<div *ngIf="!loading" class="animated fadeIn" style="margin-top: -60px;">
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <img src="{{api_path}}{{funcionarios?.imagem}}" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title">{{funcionarios.nome}}</h5>
+		<div class="card-text" *ngFor="let c of funcionarios?.contactos">
+			<p>{{c.contacto}}</p>
+		</div>
+		<p class="card-text">
+			{{funcionarios.usuario.email}}
+		</p>
+		</div>
+		<ul class="list-group list-group-flush"> 
+			<li class="list-group-item">
+				Endereço
+				<p>{{funcionarios.morada.bairro}} {{funcionarios.morada.rua}}, {{funcionarios.morada.numero_casa}}</p>
+
+			</li>
+		</ul>
+        <ul class="list-group list-group-flush">
+			<li class="list-group-item"> 
+				Número de Identidade
+				<p>{{funcionarios.nr_bi}}</p>
+			</li>
+         	<li class="list-group-item">
+				 Número de Contribuente
+				 <p>{{funcionarios.nif}}</p>
+			 </li>
+        </ul>
+        <div class="card-body">
+		  <a [routerLink]="['/funcionarios/edit/', funcionarios.id]" class="btn btn-primary mr-2">Editar</a>
+		  <!-- <button class="btn btn-warning text-light mr-2" (click)="delete(funcionarios)" >Editar</button> -->
+		  <button  class="btn btn-outline-danger" (click)="delete(funcionarios)" >Apagar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8">
+
+      <full-calendar [buttonText]="buttonText" [buttonIcons]="buttonIcons" [plugins]="calendaryPlugin" [weekends]="true"
+        [events]="calendarEvents" (click)="handleDateClick($event)" locale="pt"></full-calendar>
+
+    </div>
+
+  </div>
+</div>
