@@ -12,14 +12,14 @@
 // };
 
 export const environment = {
-  URLAPI: 'http://mickantonio-001-site1.btempurl.com/api',
+  URLAPI: 'http://mickantonio2020-001-site1.btempurl.com/api',
   production: false,
   apiKey: '50dd93c6b8d5aed5e9495c45b70c3fe8',
   apiUrl: 'http://api.openweathermap.org/data/2.5',
   tokemAPI: "",
-  API: 'http://mickantonio-001-site1.btempurl.com/api',
-  IMGS: 'http://mickantonio-001-site1.btempurl.com',
-  path: 'http://mickantonio-001-site1.btempurl.com'
+  API: 'http://mickantonio2020-001-site1.btempurl.com/api',
+  IMGS: 'http://mickantonio2020-001-site1.btempurl.com/',
+  path: 'http://mickantonio2020-001-site1.btempurl.com/'
 };
 /*
  * For easier debugging in development mode, you can import the following file
