@@ -1,4 +1,3 @@
-Autor: Osvaldo Avelino
- tens de te cadastrar e depos logar na base de dados
- Fiz um login e CRUD com com o laravel e o angural
- A ideia e cadastrar as tarefa usando a tecnologia laravel + AngulaJS
+version https://git-lfs.github.com/spec/v1
+oid sha256:49c07c0bd39df658c7bdce1f7522124f6b7315810ed310f92b0500cbf0059f0e
+size 197
