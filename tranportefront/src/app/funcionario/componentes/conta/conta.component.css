@@ -13,3 +13,32 @@
 
 .icon-form-file { margin-left: 0; }
 .file-img-upload { margin-left: -20px; }
+
+.uploadphoto {
+    display: block;
+    width: 170px;
+    height: 170px;
+    margin: 0 auto;
+    margin-top: -170px;
+    cursor: pointer;
+}
+
+.icon-upload {
+    width: 170px;
+    height: 170px;
+    padding-top: 38px;
+    font-size: 5em;
+    cursor: pointer;
+    opacity: .5;
+    background-color: #fff;
+    visibility: hidden;
+}
+.form-control-file {
+    display: none;
+}
+.uploadphoto:hover .icon-upload {
+    visibility: visible;
+}
+.user-profile-photo {
+
+}

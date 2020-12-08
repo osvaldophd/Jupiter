@@ -7,13 +7,10 @@ import { RegisterComponent } from './componentes/register/register.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/landing' },
+  { path: '', component: LandingComponent },
   // { path: 'registar-se', component: RegisterComponent },
-  { path: 'login', redirectTo:'landing'},
-  { path: 'landing', component: LandingComponent },
-  { path:'painel',
-  loadChildren: () => import('./funcionario/funcionario.module').then(mod => mod.FuncionarioModule),
-   canActivate: [AuthGuard] }
+  { path: 'user', loadChildren: () => import('./funcionario/funcionario.module').then(mod => mod.FuncionarioModule), canActivate: [AuthGuard] },
+  { path: 'login', redirectTo: ''}
 ];
 
 @NgModule({

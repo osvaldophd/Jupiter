@@ -1,3 +1,4 @@
+import { MessageService } from './../shared/services/mensage.service';
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { catchError, tap, flatMap } from 'rxjs/operators';
@@ -12,75 +13,90 @@ import { CookieService } from '../services/cookie.service';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
+  api = environment.API;
+  keyToken = environment.keyToken
+  lo
 
-    api = environment.API;
-    keyToken = environment.keyToken
+  constructor(private auth: AuthService,
+    private swal: SwalService,
+    private injector: Injector,
+    private router: Router,
+    private token: TokenService,
+    private serviceCookie: CookieService,
+    private messageService: MessageService
+  ) { }
 
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    constructor(private auth: AuthService, 
-        private swal: SwalService, 
-        private injector: Injector, 
-        private router: Router,
-        private token: TokenService,
-        private serviceCookie: CookieService
-        ) { }
+    return next.handle(req).pipe(
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
 
-        return next.handle(req).pipe(
+        const keytoken = environment.keyToken;
+        const valuetoken = localStorage.getItem(keytoken);
 
-            catchError((error: any, caught: Observable<any>): Observable<any> => {    
+        if (error.status === 403) {
 
-                const keytoken = environment.keyToken;
-                const valuetoken = localStorage.getItem(keytoken);
-
-                if(error.status === 403){
-
-                    this.serviceCookie.clenCookie();
-                    this.auth.logout();
-                    this.router.navigate(['login']);
-                }
-
-                if ((error.statusText === 'Unauthorized' || error.status === 401) && (valuetoken)) {
-
-                    const http = this.injector.get(HttpClient);
-                    return http.post(`${this.api}refresh`, {}).pipe(
-                        flatMap((data: { access_token: string }) => {
-                            console.log(data);
-                            localStorage.setItem(this.keyToken, data.access_token);
-                            const newReq = req.clone({ setHeaders: { Authorization: `Bearer ${data.access_token}`, 'Content-Type': 'application/json' } });
-                            return next.handle(newReq);
-                        })
-                    )
-
-                }
-                if (error.status === 400) {
-                    this.swal.swalTitleText('Acesso negado!', 'Verifique as suas credencias!', 'error');
-                }
+          this.serviceCookie.clenCookie();
+          this.auth.logout();
+          this.router.navigate(['login']);
+        }
 
 
-                if (error.status === 500) {
-                    // localStorage.removeItem('usuario');
-                    // document.cookie = null;
-                    this.swal.swalTitleText('Não foi possível iniciar a sessão', 'O servidor remoto não está disponível, tente mais tarde!', 'error');
+        if ((error.statusText === 'Unauthorized' || error.status === 401) && (valuetoken)) {
+          localStorage.removeItem('usuario');
+          this.auth.logout();
+          if (!this.token.verifyToken()) {
+            this.router.navigate(['/login']);
+          }
 
-                    // function eraseCookie(name) {
-                    //     document.cookie = name + '=; Max-Age=-99999999;';
-                    // }
-                    // eraseCookie('token');
+        }
 
-                    // this.auth.logout();
-                    // if (!this.token.verifyToken()) {
-                    //     this.route.navigate(['/login']);
-                    // }
-                   
-                }
+        if (error.statusText === 'authorized') {
 
-                return error;
-            }));
+          const http = this.injector.get(HttpClient);
+
+          return http.post(`${this.api}refresh`, {}).pipe(
+            flatMap((data: { access_token: string }) => {
+              localStorage.setItem(this.keyToken, data.access_token);
+              const newReq = req.clone({ setHeaders: { Authorization: `Bearer ${data.access_token}`, 'Content-Type': 'application/json' } });
+              return next.handle(newReq);
+            })
+          )
+
+        }
+
+        if (error.status === 400) {
+          if(error.error.message[0] === 'The email has already been taken.'){
+            this.messageService.mensage('E-mail já usado!', 'Este E-mail ja existe no Sistema!', 'warning');
+          }else{
+            this.messageService.mensage('Acesso negado!', 'Verifique as suas credencias!', 'error');
+          }
+
+        }
+
+        if (error.status === 500) {
+          if (error.error.message === 'nao_foi_possivel_excluir_modelo') {
+            this.messageService.mensage('Não foi possivel excluir', 'O modelo está associado a uma van', 'warning');
+          } else {
+            if (error.error.message === 'nao_foi_possivel_excluir_marca') {
+              this.messageService.mensage('Não foi possivel excluir', 'O Marca está associado a Modelo', 'warning');
+            }
+            if (error.error.message === 'nao_foi_possivel_adicionar_modelo') {
+              this.messageService.mensage('Não foi Adicionar', 'Este modelo já existe', 'warning');
+            }
+            else {
+              this.messageService.mensage('Não foi possível iniciar a sessão', 'O servidor remoto não está disponível, tente mais tarde!', 'error');
+            }
+          }
+
+        }
+
+        return error;
+      }));
 
 
 
 
-    }
+  }
 }

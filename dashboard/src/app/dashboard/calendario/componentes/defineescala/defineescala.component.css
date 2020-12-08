@@ -68,3 +68,7 @@
   .list-user label { cursor: pointer; color: #9faab7;}
 
   .escala-noexisteGrupo { color: #871519;}
+
+  .funcionario-item{
+    margin-top: 4px;
+  }

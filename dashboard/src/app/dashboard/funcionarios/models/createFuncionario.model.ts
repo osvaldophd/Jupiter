@@ -1,3 +1,4 @@
+import { Role } from './../../../models/Login.model';
 import {
   createMorada
 } from './createMorada.model';
@@ -14,11 +15,13 @@ export class createFuncionario {
   nif: string;
   imagem: any;
   usuario: {
+    id?: number
     name: string,
     email: string,
-    password: string
+    password: string,
+    roles?:any
   };
-  contactos: any;
+  contactos: Array<Role>;
   morada: any;
   roles: any;
 }

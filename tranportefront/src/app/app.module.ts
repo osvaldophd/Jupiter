@@ -20,7 +20,7 @@ registerLocaleData(localePtBr);
     AppComponent,
     LandingComponent,
     RegisterComponent,
-    MenuComponent
+    MenuComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClimaService } from 'src/app/services/clima.service';
 import { EscalaService } from 'src/app/services/escala.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { elementAt } from 'rxjs/operators';
+import { elementAt, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-escala',
@@ -27,6 +27,8 @@ export class EscalaComponent implements OnInit {
   public weekDays: Object[] = [];
   public escala_title = "Escala Semanal";
   public singular: boolean = false;
+  loading: boolean = true;
+  mensagem: string = "Carregando escala semanal";
 
   slideConfig = { "slidesToShow": 4, "slidesToScroll": 4 };
 
@@ -35,7 +37,11 @@ export class EscalaComponent implements OnInit {
   constructor(private escalaService: EscalaService) { }
 
   getMotoristas() {
-    this.escalaService.getEscalaSemanal().subscribe(
+    this.escalaService.getEscalaSemanal()
+    .pipe( finalize(()=> {
+      this.loading = false;
+    }))
+    .subscribe(
       (res) => {
         this.escalaSemana = res['data']['funcionario_escala'];
         if (this.escalaSemana[0]['funcionario']) {

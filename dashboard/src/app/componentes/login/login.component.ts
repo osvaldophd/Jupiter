@@ -1,3 +1,4 @@
+import { MessageService } from './../../shared/services/mensage.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
@@ -30,16 +31,15 @@ export class LoginComponent implements OnInit {
     private route: Router, private fb: FormBuilder,
     private swalService: SwalService,
     private http: HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private messageService: MessageService
   ) {
 
     this.formLogin = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
-
     this.returnlogin = { status: false, message: '' };
-
   }
 
   get email() { return this.formLogin.get('email'); }
@@ -47,133 +47,79 @@ export class LoginComponent implements OnInit {
   get password() { return this.formLogin.get('password'); }
 
   ngOnInit() {
-
-    console.log(document.cookie);
-
     var cookie = this.cookieService.getCookie();
-    console.log(cookie);
-
     if (cookie) {
-
       localStorage.setItem(this.keyToken, cookie.replace('"', ''));
-
       this.auth.getUserReload().subscribe(
         (res: DataUser) => {
-
           res.roles.forEach(data => {
-
             if (data.id == 2) {
-
               localStorage.setItem('userprofile', JSON.stringify(res.funcionario));
-
               this.cookieService.clenCookie();
               this.cookieService.deleteCookie();
               this.route.navigate(['/home']).finally(() => {
-                this.swalService.swalCustom('Sincronizando aplicação', 'Carregando os dados', 2000, true);
+                this.messageService.mensageTempo('Sincronizando aplicação', 'Carregando os dados', 2000, true);
               });
-
             }
           }
-
           )
 
-          this.swalService.swalCustom('Acesso Negado', 'Voce não tem permissão para aceder', 2000, true);
-
-
+          this.messageService.mensageTempo('Acesso Negado', 'Voce não tem permissão para aceder', 2000, true);
         }
       )
-
-
-
     } else if (this.auth.VerifyisLoged) {
-
       this.auth.getUserReload().subscribe(
         (res: DataUser) => {
-
           res.roles.forEach(data => {
 
             if (data.id == 2) {
               localStorage.setItem('userprofile', JSON.stringify(res.funcionario));
               this.cookieService.clenCookie();
               this.route.navigate(['/home']).finally(() => {
-                this.swalService.swalCustom('Sincronizando aplicação', 'Carregando os dados', 2000, true);
+                this.messageService.mensageTempo('Sincronizando aplicação', 'Carregando os dados', 2000, true);
               });
 
             }
-          }
+         }
+          );
 
-          )
-
-          this.swalService.swalCustom('Acesso Negado', 'Voce não tem permissão para aceder', 2000, true);
-
-
+          this.messageService.mensageTempo('Acesso Negado', 'Voce não tem permissão para aceder', 2000, true);
         }
       )
-
     }
-
-    // window.indexedDB.open('token', 1);
-
-    // var data
-    // var app = window.indexedDB.open('token', 1);
-    // app.onerror = function(){
-    //   alert('Erro ao accessar o banco de dados');
-    // }
-    // app.onsuccess = function(res){
-    //   data = app.result;
-    //   alert(data);
-    // }
-
-    // console.log(app);
-
   }
 
   verificaPermissao() {
-
   }
 
   login() {
-
     this.returnlogin.status = false;
-
     this.auth.login(this.formLogin.value)
       .subscribe((res: DataLogin) => {
-
         res.usuario.roles.forEach(user => {
-          if (user.id == 2) {
 
+          if (user.id == 2) {
             this.returnlogin.status = true;
             this.returnlogin.message = 'Login feito com sucesso!';
             this.token.setToken(res.token);
             localStorage.setItem('userprofile', JSON.stringify(res.usuario.funcionario));
-
             this.route.navigate(['/home']).finally(() => {
-              this.swalService.swalCustom('Bem vindo', 'Carregando os dados', 2000, true);
+              this.messageService.mensageTempo('Bem vindo', 'Carregando os dados', 2000, true);
             });
-
           }
         });
 
-        this.swalService.swalCustom('Acesso Negado', 'Voce não tem permissão para aceder', 2000, true);
-
-
+        this.messageService.mensageTempo('Acesso Negado', 'Voce não tem permissão para aceder', 2000, true);
       },
         (error: HttpErrorResponse) => {
-
           console.log('Error', error);
-
           if (error.error.error === 'credencias_invalidas') {
             this.swalService.swalToast();
-            this.swalService.swalCustom('Erro de Autenticação', '', 1000, true);
+            this.messageService.mensageTempo('Erro de Autenticação', '', 1000, true);
             this.returnlogin.status = true;
             this.returnlogin.message = 'O seu Email e a Senha estão incorretos.';
           }
         }
       );
-
   }
-
-
-
-
 }

@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs/internal/Subscription';
+import { MessageService } from './../../shared/services/mensage.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
@@ -8,7 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SwalService } from './../../services/swal.service';
 import { Vans } from './../../models/vans.model';
 import { VansService } from './../vans/services/vans.service';
-import { finalize } from 'rxjs/operators';
+import { finalize, filter, map } from 'rxjs/operators';
 
 
 @Component({
@@ -39,50 +41,25 @@ export class ViagensComponent implements OnInit {
   resultPesquisa: boolean = false;
   count: number;
 
-  viagens: Viagem;
+  viagens: Viagem[];
   api = environment.API_PATH;
   loading: boolean = true;
-  
+
 
   constructor(
     private formBuilder: FormBuilder,
     private viagemService: ViagemService,
-    private swal: SwalService,
+    private messageService: MessageService,
     private vanService: VansService
   ) { }
 
-  setFilter({name}) {
-
-
-      if (this.filtros[name]) {
-
-        this.filtros[name] = false;
-
-        this.userFilter.find((filter, i) => {
-          if (filter === name) {
-            this.userFilter.splice(i, 1);
-          }
-        });
-        return;
-      }
-
-      this.filtros[name] = true;
-      this.userFilter = [...this.userFilter, name];
-
-      return ;
-
-
-  }
-
   ngOnInit() {
-
     this.vanService.getAll().pipe(
       finalize(()=> {
         this.loading = false;
       })
     )
     .subscribe( (res ) => {
-
       this.vans = res.data.vans;
 
     });
@@ -99,30 +76,42 @@ export class ViagensComponent implements OnInit {
     });
 
     this.viagemService.getAll().subscribe((res: any) => {
-
       this.viagens = res.data.viagens;
     });
   }
 
-  search(v) {
+  setFilter({name}) {
+      if (this.filtros[name]) {
+        this.filtros[name] = false;
+        this.userFilter.find((filter, i) => {
+          if (filter === name) {
+            this.userFilter.splice(i, 1);
+          }
+        });
+        return;
+      }
 
+      this.filtros[name] = true;
+      this.userFilter = [...this.userFilter, name];
+      return ;
+  }
+
+
+  search(v) {
     const query = this.userFilter.reduce((p, c) =>  `${c}=${v[c]} &` + `${p}=${v[p]} &` );
       this.loading = true;
-
     this.viagemService.getQuery(query).pipe(
       finalize(()=> {
         this.loading = false;
 
       })
     ).subscribe((res: any) => {
-
       this.serachStatus = true;
-      this.count = res.data.viagens.length; 
-
+      this.count = res.data.viagens.length;
       if (this.count == 0) {
         this.viagens = null;
         this.resultPesquisa = false;
-        this.swal.swalSeaech();
+        this.messageService.swalSeaech();
       }
 
       if (this.count != 0 ) {
@@ -134,6 +123,11 @@ export class ViagensComponent implements OnInit {
 
     });
 
+  }
+
+  comentario(idViagem: number){
+     const comentario = this.viagens.map(dados=>dados).find(dados=>dados.id == idViagem)
+     this.messageService.mensage(comentario['usuario'].nome.toUpperCase()+' comentou', comentario.comentario, 'info');
   }
 
 }

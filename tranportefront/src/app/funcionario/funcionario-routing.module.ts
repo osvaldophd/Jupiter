@@ -11,7 +11,7 @@ import { FuncionarioComponent } from './funcionario.component';
 const routes: Routes = [
 
   {
-    path: 'boleia',  canActivate: [AuthGuard], component: FuncionarioComponent, children:
+    path: '', component: FuncionarioComponent, canActivate: [AuthGuard], children:
       [
         { path: '', component: HomeComponent },
         { path: 'home', component: HomeComponent },

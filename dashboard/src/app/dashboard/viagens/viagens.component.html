@@ -122,7 +122,7 @@
                     <select class="form-control" formControlName="idVan" id="van">
                       <option [disabled]="true">Selecione a van</option>
                       <ng-container *ngFor="let van of vans">
-                        <option [value]="van.id">{{van.modelo.nome}} {{van.matricula}}</option>
+                        <option [value]="van.id">{{van.matricula}} ({{van.modelo.nome|uppercase}})</option>
                       </ng-container>
                     </select>
                   </div>
@@ -175,15 +175,16 @@
               <th scope="col">#</th>
               <th scope="col">Motorista</th>
               <th scope="col">Viajante</th>
-              <th scope="col">Matricula</th>
-              <th scope="col">Data</th>
-              <th scpo="col">Estado da viagem</th>
+              <th scope="col">Van/Matricula</th>
+              <th scope="col">Data/Boleia</th>
+              <th scpo="col">Estado/Boleia</th>
               <th scope="col">Avaliação</th>
+              <th scope="col">Opções</th>
             </tr>
           </thead>
           <tbody>
 
-            <tr *ngFor="let viagem of viagens; let i = index" data-toggle="modal" data-target=".modal-map">
+            <tr *ngFor="let viagem of viagens; let i = index">
               <th scope="row">{{i + 1}}</th>
               <td>{{viagem.motorista?.nome}}</td>
               <td>{{viagem.usuario?.nome}}</td>
@@ -195,7 +196,7 @@
                 <span *ngIf="viagem?.viagem_terminada === 1">Concluído</span>
               </td>
               <td *ngIf="viagem.avaliacao === 0 || viagem.avaliacao === []">
-                <span class="fa fa-star text-warning ml-1"> Ainda Não Existe uma avaliação</span>
+                <span class="text-warning ml-1"> Não avaliado</span>
               </td>
               <td *ngIf="viagem.avaliacao === 1">
                 <i class="fa fa-star text-warning ml-1"></i>
@@ -221,7 +222,13 @@
                 <i class="fa fa-star text-warning ml-1"></i>
                 <i class="fa fa-star text-warning ml-1"></i>
               </td>
+               <td>
+              <button *ngIf="viagem.comentario" (click)="comentario(viagem.id)" class="btn btn-outline-info btn-sm mb-2">Ver Comentário</button>
+              <span *ngIf="!viagem.comentario" class="text-danger mb-2">Não comentada</span>
+                <button class="btn btn-outline-warning btn-sm mb-2 ml-2" data-toggle="modal" data-target=".modal-map">Ver Tragetora</button>
+            </td>
             </tr>
+
 
           </tbody>
         </table>
@@ -237,6 +244,7 @@
               <th scope="col">Data</th>
               <th scpo="col">Estado da viagem</th>
               <th scope="col">Avaliação</th>
+              <th scope="col">Opções</th>
             </tr>
           </thead>
           <tbody>
@@ -244,14 +252,14 @@
               <tr *ngIf="!resultPesquisa">
                 <td colspan="6" class="text-center py-5 my-5 h3">Não foi encontrados resultados da pesquisa!</td>
               </tr>
-          
+
               <ng-template ngIf="resultPesquisa">
                 <tr  *ngFor="let viagem of viagens; let i = index" data-toggle="modal" data-target=".modal-map">
                   <th scope="row">{{i + 1}}</th>
                   <td>{{viagem.motorista?.nome}}</td>
                   <td>{{viagem.usuario?.nome}}</td>
                   <td>{{viagem.van?.matricula}}</td>
-    
+
                   <td>{{viagem?.created_at | date}}</td>
                   <td>
                     <span *ngIf="viagem?.viagem_terminada === 0">Em curso</span>
@@ -287,8 +295,8 @@
                 </tr>
 
               </ng-template>
-              
- 
+
+
 
 
 
@@ -327,12 +335,12 @@
     <!-- <div class="col-12">
       <div class="card">
         <div class="card-body">
-        
+
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3941.750956612099!2d13.187360615022854!3d-8.902729993812473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x1a51f56792705ff3%3A0x445022584052d72b!2sMELELVIS%2C%20LDA!3m2!1d-8.901968499999999!2d13.1838219!4m5!1s0x1a51f4d9a0206c4b%3A0x438827167f770b4a!2sAcademia%20BAI%20(SAESP)!3m2!1d-8.9042247!2d13.1885894!5e0!3m2!1spt-PT!2sao!4v1580399456359!5m2!1spt-PT!2sao"
             width="100%" height="600" frameborder="0" style="border:0;" allowfullscreen="">
           </iframe>
-          
+
         </div>
       </div>
     </div> -->

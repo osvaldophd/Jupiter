@@ -72,7 +72,9 @@ body {
   width: 200px;
   border-radius: 100px !important;
 }
-
+.margin-bottom{
+  margin-bottom: 10px;
+}
 .btn-primary-theme-vermelho {
   background-color: #ba1720 !important;
   color: white !important;
@@ -86,8 +88,8 @@ body {
   color: black;
 }
 
-.btn-primary-theme :hover {
-  background-color: #d8a907 !important;
+.btn-primary-theme:hover {
+  background-color: #e6b507e0 !important;
   box-shadow: 0 0 10px rgba(59, 58, 59, 0.5);
 }
 
@@ -884,13 +886,14 @@ footer section.container div#address p {
 }
 
 .btn-remove-contact {
-  cursor: pointer; float: right; 
+  cursor: pointer; float: right;
 }
 .btn-remove-contact::before {
- font-size: 2.2em;
+  text-align: center;
+ font-size: 1.2em;
  cursor: pointer;
  float: right;
- padding: 0 0px 0 0;
+ padding: 6px 0px 0 0;
  width: 40px;
  height: 50px;
  margin-top: -37px;

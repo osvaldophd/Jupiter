@@ -31,7 +31,7 @@ export class RelatoriosService {
           name: 'Marcos Simao',
           viagens: 23,
           viagensAnalisadas: 15,
-          avalicaoM: 45
+          avalicaoM: 40
         }
       ],
       viagens: [

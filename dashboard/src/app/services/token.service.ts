@@ -24,10 +24,7 @@ export class TokenService {
   }
 
   verifyToken(): boolean {
-
     if(localStorage.getItem(this.keyToken)){
-
-
         return true;
      }
     return false;

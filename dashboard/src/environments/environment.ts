@@ -11,39 +11,39 @@
 //   keyCookie: 'token'
 // };
 
+// export const environment = {
+//     production: true,
+//     apiKey: '50dd93c6b8d5aed5e9495c45b70c3fe8',
+//     apiUrl: 'http://api.openweathermap.org/data/2.5',
+//     API: 'http://localhost/api-juber/public/api/',
+//     API_IMG: 'http://localhost/api-juber/public/',
+//     API_PATH: 'http://localhost/api-juber/public',
+//     keyCookie: 'token',
+//     keyToken: 'usuario',
+//     domain: '.darioandrade.eti.br',
+//     urlTorenRedirect: 'http://boleia.darioandrade.eti.br'
+//   };
+
+
 export const environment = {
   production: true,
   apiKey: '50dd93c6b8d5aed5e9495c45b70c3fe8',
   apiUrl: 'http://api.openweathermap.org/data/2.5',
-  API: 'http://mickantonio2020-001-site1.btempurl.com/api/',
-  API_IMG: 'http://mickantonio2020-001-site1.btempurl.com/',
-  API_PATH: 'http://mickantonio2020-001-site1.btempurl.com',
+  API: 'http://boleia2020-001-site1.ftempurl.com/api/',
+  API_IMG: 'http://boleia2020-001-site1.ftempurl.com/',
+  API_PATH: 'http://boleia2020-001-site1.ftempurl.com/',
   keyCookie: 'token',
   keyToken: 'usuario',
-  domain: '.darioandrade.eti.br',
-  urlTorenRedirect: 'http://boleia.darioandrade.eti.br'
+  domain: '.academiajupiter.com.br',
+  urlTorenRedirect: 'http://boleia.academiajupiter.com.br'
 };
 
-
-// export const environment = {
-//   production: true,
-//   apiKey: '50dd93c6b8d5aed5e9495c45b70c3fe8',
-//   apiUrl: 'http://api.openweathermap.org/data/2.5',
-//   API: 'http://mickantonio-001-site1.btempurl.com/api/',
-//   API_IMG: 'http://mickantonio-001-site1.btempurl.com',
-//   API_PATH: 'http://mickantonio-001-site1.btempurl.com',
-//   keyCookie: 'token',
-//   keyToken: 'usuario',
-//   domain: '.darioandrade.eti.br',
-//   urlTorenRedirect: 'http://boleia.darioandrade.eti.br'
-// };
-
 /*
-* For easier debugging in development mode, you can import the following file
-* to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
-*
-* This import should be commented out in production mode because it will have a negative impact
-* on performance if an error is thrown.
-*/
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 

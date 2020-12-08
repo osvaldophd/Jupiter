@@ -1,157 +1,174 @@
 <div *ngIf="loading">
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </div>
 <div *ngIf="!loading">
 
-    <div class="funcionarios-form-search">
-        <form action="">
-            <div class="form-group">
-                <input (keyup)="pesquisar($event.target.value)" class="form-control funcionarios-input-serch-users"
-                    type="text" placeholder="Pesquisar funcionario">
-            </div>
-        </form>
-    </div>
+  <div class="funcionarios-form-search">
+    <form action="">
+      <div class="form-group">
+        <input (keyup)="pesquisar($event.target.value)" class="form-control funcionarios-input-serch-users" type="text"
+          placeholder="Pesquisar funcionario">
+      </div>
+    </form>
+  </div>
 
-    <ng-template *ngIf="pesquisaOn; then pesquisaShow; else pesquisaOff"> </ng-template>
-    <ng-template #pesquisaShow>
+  <ng-template *ngIf="pesquisaOn; then pesquisaShow; else pesquisaOff"> </ng-template>
+  <ng-template #pesquisaShow>
 
-        <ng-template *ngIf="pesquisaR.length != 0; then pesquisaShowRTrue; else pesquisaShowRFalse"> </ng-template>
+    <ng-template *ngIf="pesquisaR.length != 0; then pesquisaShowRTrue; else pesquisaShowRFalse"> </ng-template>
 
-        <ng-template #pesquisaShowRTrue>
-            <div class="content-table">
+    <ng-template #pesquisaShowRTrue>
+      <div class="content-table">
 
-                <table class="table table-striped">
-                    <!-- <caption>Lista de Motoristas</caption> -->
-                    <thead class="bg-warning">
-                        <tr>
+        <table class="table table-striped">
+          <!-- <caption>Lista de Motoristas</caption> -->
+          <thead class="bg-warning">
+            <tr>
 
-                            <th class="avatar"></th>
-                            <th>NOME</th>
-                            <th>EMAIL</th>
-                            <th>NIF</th>
-                            <th>TELEFONE</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-hover">
+              <th class="avatar"></th>
+              <th>NOME</th>
+              <th>EMAIL</th>
+              <th>BI</th>
+              <th>TELEFONE</th>
+              <th>PERFIL</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="table-hover">
 
-                        <tr *ngFor="let dado of pageData">
+            <tr *ngFor="let dado of pageData">
 
-                            <td class="avatar">
-                                <div class="round-img">
-                                    <a [routerLink]="['/funcionarios', dado.id]">
-                                        <img class="rounded-circle" src="{{api_path}}{{dado.imagem}}" alt=""
-                                            width="40px" height="40px"></a>
-                                </div>
-                            </td>
-                            <td><a [routerLink]="['/funcionarios', dado.id]" class="text-dark"> <span
-                                        class="name">{{dado.nome}}</span> </a></td>
-                            <td>{{dado.usuario.email}}</td>
-                            <td> <span class="product">{{dado.nif}}</span> </td>
-                            <td><span *ngIf="dado?.contactos[0]?.contacto" class="count">
-                                    {{dado?.contactos[0]?.contacto}}
-                                </span></td>
-                            <td class="d-flex justify-content-around">
-                                <a [routerLink]="['/funcionarios/edit/', dado.id]"><button class="btn btn-primary">
-                                        <!-- <span class="pe-7s-edit"></span> --> Editar</button> </a>
-                                <button (click)="delete(dado)" href="#" class="btn btn btn-outline-danger">
-                                    <!-- <span class="pe-7s-delete-user"></span> --> Apagar</button>
-                            </td>
-                        </tr>
+              <td class="avatar">
+                <div class="round-img">
+                  <a [routerLink]="['/funcionarios', dado.id]">
+                    <img class="rounded-circle" src="{{api_path}}uploads/funcionarios/{{dado.imagem}}" alt=""
+                      width="40px" height="40px"></a>
+                </div>
+              </td>
+              <td>
+                <a [routerLink]="['/funcionarios', dado.id]" class="text-dark"> <span class="name">{{dado.nome}}</span>
+                </a>
+              </td>
+              <td>{{dado.usuario.email}}</td>
+              <td> <span class="product">{{dado.nif}}</span> </td>
+              <td>
+                <span *ngIf="dado?.contactos[0]?.contacto" class="count">{{dado?.contactos[0]?.contacto}}</span>
+              </td>
+              <td>
+                <span *ngFor="let role of dado.usuario.roles">
+                  {{role.name}}
+                </span>
+              </td>
+              <td class="d-flex justify-content-around">
+                <a [routerLink]="['/funcionarios/edit/', dado.id]"><button class="btn btn-outline-primary btn-sm">
+                    <!-- <span class="pe-7s-edit"></span> --> Editar</button> </a>
+                <button (click)="delete(dado)" href="#" class="btn btn btn-outline-danger  btn-sm">
+                  <!-- <span class="pe-7s-delete-user"></span> --> Apagar</button>
+              </td>
+            </tr>
 
-                    </tbody>
-                </table>
+          </tbody>
+        </table>
 
-            </div>
-
-
-        </ng-template>
-
-        <ng-template #pesquisaShowRFalse>
-
-            <div class="my-5 d-block text-center py-5 " style="margin:116px auto 200px auto!important">
-                <h1><svg width="50" height="50" enable-background="new 0 0 24 24" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="m17.573 16.512c1.508-1.752 2.427-4.025 2.427-6.512 0-5.514-4.486-10-10-10s-10 4.486-10 10 4.486 10 10 10c2.487 0 4.76-.919 6.512-2.427l6.208 6.208c.146.146.338.22.53.22s.384-.073.53-.22c.293-.293.293-.768 0-1.061zm-16.073-6.512c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5-8.5-3.813-8.5-8.5z" />
-                        <path
-                            d="m10 9c1.654 0 3-1.346 3-3s-1.346-3-3-3-3 1.346-3 3 1.346 3 3 3zm0-4.5c.827 0 1.5.673 1.5 1.5s-.673 1.5-1.5 1.5-1.5-.673-1.5-1.5.673-1.5 1.5-1.5z" />
-                        <path
-                            d="m12.25 10h-4.5c-1.517 0-2.75 1.233-2.75 2.75v1.5c0 .414.336.75.75.75s.75-.336.75-.75v-1.5c0-.689.561-1.25 1.25-1.25h4.5c.689 0 1.25.561 1.25 1.25v1.5c0 .414.336.75.75.75s.75-.336.75-.75v-1.5c0-1.517-1.233-2.75-2.75-2.75z" />
-                    </svg>Pesquisa não encontrada!</h1>
-            </div>
-        </ng-template>
-
-
-    </ng-template>
-    <ng-template #pesquisaOff>
-
-        <div class="content-table">
-
-
-            <table class="table table-striped">
-                <!-- <caption>Lista de Motoristas</caption> -->
-                <thead class="bg-warning">
-                    <tr>
-
-                        <th class="avatar"></th>
-                        <th>NOME</th>
-                        <th>EMAIL</th>
-                        <th>NIF</th>
-                        <th>TELEFONE</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="table-hover">
-
-                    <tr *ngFor="let dado of pageData">
-
-                        <td class="avatar">
-                            <div class="round-img">
-                                <a [routerLink]="['/funcionarios', dado.id]">
-                                    <img class="rounded-circle" src="{{api_path}}{{dado.imagem}}" alt="" width="40px"
-                                        height="40px"></a>
-                            </div>
-                        </td>
-                        <td><a [routerLink]="['/funcionarios', dado.id]" class="text-dark"> <span
-                                    class="name">{{dado.nome}}</span> </a></td>
-                        <td>{{dado.usuario.email}}</td>
-                        <td> <span class="product">{{dado.nif}}</span> </td>
-                        <td><span *ngIf="dado?.contactos[0]?.contacto" class="count"> {{dado?.contactos[0]?.contacto}}
-                            </span></td>
-                        <td class="d-flex justify-content-around">
-                            <a [routerLink]="['/funcionarios/edit/', dado.id]"><button class="btn btn-primary">
-                                    <!-- <span class="pe-7s-edit"></span> --> Editar</button> </a>
-                            <button (click)="delete(dado)" href="#" class="btn btn btn-outline-danger">
-                                <!-- <span class="pe-7s-delete-user"></span> --> Apagar</button>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-
-        </div>
-
+      </div>
 
 
     </ng-template>
 
+    <ng-template #pesquisaShowRFalse>
+
+      <div class="my-5 d-block text-center py-5 " style="margin:116px auto 200px auto!important">
+        <h1>
+          <svg width="50" height="50" enable-background="new 0 0 24 24" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="m17.573 16.512c1.508-1.752 2.427-4.025 2.427-6.512 0-5.514-4.486-10-10-10s-10 4.486-10 10 4.486 10 10 10c2.487 0 4.76-.919 6.512-2.427l6.208 6.208c.146.146.338.22.53.22s.384-.073.53-.22c.293-.293.293-.768 0-1.061zm-16.073-6.512c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5-8.5-3.813-8.5-8.5z" />
+            <path
+              d="m10 9c1.654 0 3-1.346 3-3s-1.346-3-3-3-3 1.346-3 3 1.346 3 3 3zm0-4.5c.827 0 1.5.673 1.5 1.5s-.673 1.5-1.5 1.5-1.5-.673-1.5-1.5.673-1.5 1.5-1.5z" />
+            <path
+              d="m12.25 10h-4.5c-1.517 0-2.75 1.233-2.75 2.75v1.5c0 .414.336.75.75.75s.75-.336.75-.75v-1.5c0-.689.561-1.25 1.25-1.25h4.5c.689 0 1.25.561 1.25 1.25v1.5c0 .414.336.75.75.75s.75-.336.75-.75v-1.5c0-1.517-1.233-2.75-2.75-2.75z" />
+          </svg> Pesquisa não encontrada!
+        </h1>
+      </div>
+    </ng-template>
 
 
+  </ng-template>
+  <ng-template #pesquisaOff>
+    <div class="content-table">
+      <table class="table table-striped">
+        <!-- <caption>Lista de Motoristas</caption> -->
+        <thead class="bg-warning">
+          <tr>
 
+            <th class="avatar"></th>
+            <th>NOME</th>
+            <th>EMAIL</th>
+            <th>NIF</th>
+            <th>TELEFONE</th>
+            <th>PERFIL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="table-hover">
 
+          <tr *ngFor="let dado of pageData">
 
-    <div>
+            <td class="avatar">
+              <div class="round-img">
+                <a [routerLink]="['/funcionarios', dado.id]">
+                  <img class="rounded-circle" src="{{api_path}}uploads/funcionarios/{{dado.imagem}}" alt="" width="40px"
+                    height="40px"></a>
+              </div>
+            </td>
+            <td>
+              <a [routerLink]="['/funcionarios', dado.id]" class="text-dark"> <span class="name">{{dado.nome}}</span>
+              </a>
+            </td>
+            <td>{{dado.usuario.email}}</td>
+            <td>
+              <span class="product">{{dado.nif}}</span>
+             </td>
+            <td>
+              <span *ngIf="dado?.contactos[0]?.contacto" class="count"> {{dado?.contactos[0]?.contacto}}</span>
+            </td>
+            <td>
+              <span *ngFor="let role of dado.usuario.roles">
+                {{role.name}}
+              </span>
+            </td>
+            <td class="justify-content-around">
+              <a [routerLink]="['/funcionarios/edit/', dado.id]">
+                <button class="btn btn-outline-primary btn-sm mb-1"><span class="pe-7s-edit"></span> Editar
+                </button>
+              </a>
+              <button (click)="delete(dado)" href="#" class="btn btn-outline-danger btn-sm"
+                *ngIf="!userLogado(dado.usuario)">
+                <span class="pe-7s-delete-user"></span> Apagar</button>
+            </td>
+          </tr>
 
-        <nav *ngIf="paginator.length > 0" aria-label="Page navigation example">
-            <ul class="pagination pagination-md">
-                <span class="title-paginator">Paginas</span> 
-                <li *ngFor="let page of paginator" class="page-item">
-                    <a class="page-link" (click)="getPage(page)"  [ngClass]="{'active': (page == pageActive) } ">{{page}}</a>
-                </li>
-            </ul>
-        </nav>
+        </tbody>
+      </table>
     </div>
+  </ng-template>
+
+
+
+
+
+
+  <div>
+
+    <nav *ngIf="paginator.length > 0" aria-label="Page navigation example">
+      <ul class="pagination pagination-md">
+        <span class="title-paginator">Paginas</span>
+        <li *ngFor="let page of paginator" class="page-item">
+          <a class="page-link" (click)="getPage(page)" [ngClass]="{'active': (page == pageActive) } ">{{page}}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
 
 

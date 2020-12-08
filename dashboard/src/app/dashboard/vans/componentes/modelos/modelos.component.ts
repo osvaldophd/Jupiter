@@ -1,3 +1,4 @@
+import { MessageService } from './../../../../shared/services/mensage.service';
 import { Component, OnInit } from '@angular/core';
 import { MarcasService } from '../../services/marcas.service';
 import { ListaMarcas } from '../../models/listaMarcas.model';
@@ -25,7 +26,8 @@ export class ModelosComponent implements OnInit {
     private modelos: MarcasService,
     private fb: FormBuilder,
     private modelosService: ModelosService,
-    private swal: SwalService
+    private swal: SwalService,
+    private messageService: MessageService
   ) {
     this.formulario = this.fb.group({
       nome: ['', Validators.required],
@@ -42,7 +44,7 @@ export class ModelosComponent implements OnInit {
       (resp: ListaMarcas) => {
         this.listAllMarcas = resp.data;
         this.listAllMarcas = this.listAllMarcas.marcas;
-        
+
       }
     )
   }
@@ -65,16 +67,16 @@ export class ModelosComponent implements OnInit {
   }
 
   createMarca() {
-
     const dataForm = this.formulario.value;
 
     this.modelosService.create(dataForm).subscribe(
       (res: any) => {
-        
-        if (res.data.modelo.id) {
-          this.swal.swalTitleText('Cadastro', `Van de modelo ${res.modelo.nome} foi adicionada`, 'success');
+
+        if (res.status === true) {
+          this.messageService.mensage('Sucesso', `Modelo  foi cadastrado`, 'success');
+          this.formulario.reset();
         } else {
-          this.swal.swalTitleText('Cadastro', `Não foi possível adicionar novo modelo`, 'error');
+          this.messageService.mensage('Erro', `Não foi possível cadastrar o modelo`, 'error');
         }
 
         if (this.listamodelo_id) {
@@ -93,22 +95,22 @@ export class ModelosComponent implements OnInit {
 
     this.modelosService.delete(+dados.id).subscribe(
         (res) => {
-          
+
           if (this.listamodelo_id) {
             this.listModelos(this.listamodelo_id);
           }
-          this.swal.swalCustom('Van Eliminada', `A van de modelo <strong> ${dados.nome} <strong> foi removido!`, 1000, true)
+          this.messageService.mensageTempo('Van Eliminada', `A van de modelo <strong> ${dados.nome} <strong> foi removido!`, 1000, true)
         },
         (error) => {
 
-          this.swal.swalTitleText('Eliminar van', `Não foi possível eminimar a van de modelo ${dados.nome}`, 'error');
+          this.messageService.mensage('Eliminar van', `Não foi possível eminimar a van de modelo ${dados.nome}`, 'error');
 
         }
 
       );
     };
 
-    
+
     this.swal.swalConfirmation(
         'Eliminar',
         `Deseja eliminar a van de modelo ${dados.nome}?`,

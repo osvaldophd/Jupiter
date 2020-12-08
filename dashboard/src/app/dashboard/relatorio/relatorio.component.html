@@ -77,79 +77,79 @@
 
 <div class="container mt-5 pt-5">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-12 my-5">
-      <div class="row justify-content-between">
-        <div class="col-4 h3">Relatórios</div>
-        <div class="col-3">
-          <div class="datepicker-form">
+        <div class="col-12 my-5">
+            <div class="row justify-content-between">
+                <div class="col-4 h3">Relatórios</div>
+                <div class="col-3">
+                    <div class="datepicker-form">
 
-              <input type="text" id="formInput" class="from-control format-field-date" name="daterangeInput"
-              daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
-              <label for="formInput">
+                        <input type="text" id="formInput" class="from-control format-field-date" name="daterangeInput" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" />
+                        <label for="formInput">
                 <i  class="format-field-date-icon fa fa-calendar" aria-hidden="true"></i>
               </label>
 
 
 
-          </div>
+                    </div>
 
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="col-4">
-      <div class="h3">Viagens </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="h3">Viagens </div>
 
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Tipo</th>
-            <th scope="col">Quantidade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let viagem of viagens">
-            <th>{{viagem.name}}</th>
-            <td>{{viagem.viagem}}</td>
-          </tr>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let viagem of viagens">
+                        <th>{{viagem.name}}</th>
+                        <td>{{viagem.viagem}}</td>
+                    </tr>
 
-        </tbody>
-        <tfoot>
+                </tbody>
+                <!-- <tfoot>
           <tr>
             <td>Total</td>
             <td>24</td>
           </tr>
-        </tfoot>
-      </table>
+        </tfoot> -->
+            </table>
 
 
 
+        </div>
+
+        <div class="col-md-8 col-sm-12">
+            <div class="h3">Motoristas</div>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Total de Viagens</th>
+                        <th scope="col">Total de Viagens Analisadas</th>
+                        <th scope="col">Avaliação Média</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let motorista of motoristas">
+                        <th scope="row">{{motorista.name}}</th>
+                        <td>{{motorista.viagens}}</td>
+                        <td>{{motorista.viagensAnalisadas}}</td>
+                        <td>{{motorista.avalicaoM}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
     </div>
-    <div class="col-8">
-      <div class="h3">Motoristas</div>
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Total de Viagens</th>
-            <th scope="col">Total de Viagens Analisadas</th>
-            <th scope="col">Avaliação Média</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let motorista of motoristas">
-            <th scope="row">{{motorista.name}}</th>
-            <td>{{motorista.viagens}}</td>
-            <td>{{motorista.viagensAnalisadas}}</td>
-            <td>{{motorista.avalicaoM}}</td>
-          </tr>
-
-        </tbody>
-      </table>
-
-    </div>
-  </div>
 
 </div>

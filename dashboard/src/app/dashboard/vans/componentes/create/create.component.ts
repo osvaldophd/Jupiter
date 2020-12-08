@@ -1,3 +1,4 @@
+import { MessageService } from './../../../../shared/services/mensage.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { VansService } from '../../services/vans.service';
@@ -21,19 +22,19 @@ export class CreateComponent implements OnInit {
   listamodelos: any;
   fileData: any;
   fileImg: any
-  defaultImg: string = this.api_path+'/uploads/vans/default.jpg';
+  defaultImg: string = this.api_path + 'uploads/vans/defaultvan.png';
   idmarca: number;
   submitted: boolean;
   f: any;
   mask = {
     matricula: [/[A-Z]/, /[A-Z]/, '-', /\d/, /\d/, '-', /\d/, /\d/, '-', /[A-Z]/, /[A-Z]/],
     telefone: [/[0-9]/, /[0-9]/, /[0-9]/, ' ', /[0-9]/, /[0-9]/, /[0-9]/, ' ', /[0-9]/, /[0-9]/, /[0-9]/],
-    bi:  [/[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/,  /[A-Z]/, /[A-Z]/, /[0-9]/, /[0-9]/, /[0-9]/ ]
+    bi: [/[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[A-Z]/, /[A-Z]/, /[0-9]/, /[0-9]/, /[0-9]/]
   };
 
   // tslint:disable-next-line: variable-name
   bd_marcas: { id: number, marca: string }[];
-  
+
 
 
   // tslint:disable-next-line: max-line-length
@@ -42,8 +43,9 @@ export class CreateComponent implements OnInit {
     private vanservice: VansService,
     private marcasService: MarcasService, private modeloService: MarcasService,
     private cd: ChangeDetectorRef,
-    private swalService: SwalService
-    ) {
+    private messageService: MessageService
+
+  ) {
 
 
     // Fim do form Builder
@@ -61,10 +63,11 @@ export class CreateComponent implements OnInit {
       cor_id: [''],
       imagem: [''],
       nr_ocupantes: ['', Validators.required],
+      ano_aquisicao: ['', Validators.required],
       contactos: this.fb.array([
-          this.fb.group({
-            contacto: ['', Validators.required]
-          })
+        this.fb.group({
+          contacto: ['', Validators.required]
+        })
       ])
 
     });
@@ -74,7 +77,7 @@ export class CreateComponent implements OnInit {
   }
 
   get fv() { return this.form.controls; }
-  get contacto() {return this.form.get('contactos') as FormArray }
+  get contacto() { return this.form.get('contactos') as FormArray }
 
   addContacto() {
 
@@ -84,7 +87,7 @@ export class CreateComponent implements OnInit {
       })
     );
   }
-  
+
   removeContacto(item) {
     this.contacto.removeAt(item)
 
@@ -128,7 +131,7 @@ export class CreateComponent implements OnInit {
     this.f = this.form.controls;
 
     if (this.form.invalid) {
-      this.swalService.swalTitleText('Erro ao processar o formulário', 'Por favor, preencha todos os campos!', 'error');
+      this.messageService.mensage('Erro ao processar o formulário', 'Por favor, preencha todos os campos!', 'error');
       return false;
     }
 
@@ -136,25 +139,26 @@ export class CreateComponent implements OnInit {
       matricula: this.form.value.matricula,
       descricao: this.form.value.descricao,
       modelo_id: this.form.value.modelo,
+      ano_aquisicao: this.form.value.ano_aquisicao,
+      nr_ocupantes: this.form.value.nr_ocupantes,
       cor_id: 3,
       imagem: this.fileData,
-       nr_ocupantes: 23,
       contactos: this.form.value.contactos
     };
 
-    
+
 
     this.vanservice.create(dataVan)
       .subscribe(
         (res) => {
 
-          this.swalService.swalTitleText('Sucesso', 'Van cadastrada com sucesso', 'success' );
+          this.messageService.mensage('Sucesso', 'Van cadastrada com sucesso', 'success');
           this.onReset();
         },
         (error: any) => {
-  
+
           if (error.status === 500) {
-            this.swalService.swalTitleText('Erro no Cadastro', 'Desculpa, não foi possível cadastrar a van', 'error' );
+            this.messageService.mensage('Erro no Cadastro', 'Desculpa, não foi possível cadastrar a van', 'error');
           }
         }
       )
@@ -164,7 +168,7 @@ export class CreateComponent implements OnInit {
 
 
 
-  onReset(){
+  onReset() {
     this.submitted = false;
     this.ngOnInit();
   }

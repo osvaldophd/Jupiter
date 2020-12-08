@@ -1,3 +1,4 @@
+import { MessageService } from './../../../../shared/services/mensage.service';
 import { Component, OnInit } from '@angular/core';
 import { VansService } from '../../services/vans.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,7 +27,8 @@ export class ListDetailComponent implements OnInit {
   constructor(private vanservice: VansService,
               private router: Router,
               private route: ActivatedRoute,
-              private swalService: SwalService
+              private swalService: SwalService,
+              private messageService: MessageService
              ) {
 
    }
@@ -37,7 +39,7 @@ export class ListDetailComponent implements OnInit {
 
       this.vanservice.deteteVan(+van.id)
     .subscribe( (res) => {
-      this.swalService.swalCustom('Van Eliminada', `A van <strong> ${van.modelo.nome} <strong> foi removido!`, 1000, true);
+      this.messageService.mensageTempo('Van Eliminada', `A van <strong> ${van.modelo.nome} <strong> foi removido!`, 1000, true);
       this.router.navigate(['/vans']);
 
     });

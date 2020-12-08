@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FuncionariosService } from 'src/app/dashboard/funcionarios/services/funcionarios.service';
-import { $ } from 'protractor';
 import { CalendarioService } from 'src/app/services/calendario.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from 'src/app/services/swal.service';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { environment } from 'src/environments/environment';
 import { setTimeout } from 'timers';
 import { finalize } from 'rxjs/operators';
+import { $ } from 'protractor';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-defineescala',
@@ -27,11 +27,8 @@ export class DefineescalaComponent implements OnInit {
   nGrupos: number;
   api_path = environment.API_PATH;
   loading: boolean = true;
-
-
   resultadoPesquisa: Array<any> = [];
   pesquisaOn: boolean = false;
-
   constructor(
     private funcionariosService: FuncionariosService,
     private calendaioService: CalendarioService,
@@ -40,46 +37,65 @@ export class DefineescalaComponent implements OnInit {
   ) {
     this.formulario = fb.group({
       mes: ['', Validators.required],
+      ano: ['', Validators.required],
       intervalo: ['', Validators.required]
+    });
+  }
 
-    })
-
-
+  ngOnInit() {
+    this.funcionariosService.getAllMotoristas().pipe(
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe(
+      (resp) => {
+        this.funcionarios = resp;
+        this.funcionarios = this.funcionarios.data.funcionarios;
+        let resultado: Array<any> = [];
+        Object.values(this.funcionarios).forEach(elemento => {
+          elemento['checked'] = false;
+          resultado.push(elemento);
+        });
+        this.funcionarios = resultado.sort((a, b) => {
+          if (a.nome < b.nome)
+            return -1
+          if (a.nome > b.nome)
+            return 1
+          return 0
+        });
+        this.fucionariosData = this.funcionarios;
+      }
+    );
   }
 
   get mes() {
     return this.formulario.get('mes');
   }
 
-  get intervalo() { return this.formulario.get('intervalo') }
-
+  get intervalo() { return this.formulario.get('intervalo'); }
 
   gruposEscalados() {
-
     this.grupoElescalados = [];
-
-    var itens: Array<any> = [];
+    let itens: Array<any> = [];
     const totalItens = this.escalados.length;
     const total = (totalItens / this.nGrupos);
-    var i = 0;
+    let i = 0;
 
-    for (var j = 0; j < total; j++) {
-
-      for (var k = 0; k < this.nGrupos; k++) {
+    for (let j = 0; j < total; j++) {
+      for (let k = 0; k < this.nGrupos; k++) {
         itens.push(this.escalados[i]);
         i++;
-        if (i === this.escalados.length) break;
+        if (i === this.escalados.length) {
+          break;
+        }
       }
-
       this.grupoElescalados.push({ users: itens, grupo: (j + 1) });
       itens = [];
-
     }
 
 
 
   }
-
 
   pesquisar(data) {
 
@@ -100,9 +116,7 @@ export class DefineescalaComponent implements OnInit {
 
   }
 
-
   cleanString(text): string {
-
     text = text.toLowerCase();
     text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
     text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
@@ -111,30 +125,6 @@ export class DefineescalaComponent implements OnInit {
     text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
     text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
     return text;
-  }
-
-  ngOnInit() {
-
-    this.funcionariosService.getAllMotoristas().pipe(
-      finalize(()=> {
-        this.loading = false;
-      })
-    ).subscribe(
-      (resp) => {
-
-        this.funcionarios = resp;
-        this.funcionarios = this.funcionarios.data.funcionarios;
-        var resultado: Array<any> = [];
-
-        Object.values(this.funcionarios).forEach(elemento => {
-          elemento['checked'] = false;
-          resultado.push(elemento);
-        })
-
-        this.funcionarios = resultado;
-        this.fucionariosData = this.funcionarios;
-      }
-    )
   }
 
   addfunctionarios() {
@@ -147,7 +137,7 @@ export class DefineescalaComponent implements OnInit {
   }
 
   create() {
-
+    this.loading = true;
     if (this.escalados.length <= 0) {
       this.swal.swalTitleText('Erro! Cadastro de Escala', 'Por favor,  seleccione pelo menos um motorista para a escala', 'error');
       return false;
@@ -155,7 +145,7 @@ export class DefineescalaComponent implements OnInit {
 
     const data = {
       funcionarios: this.f_data,
-      ano: null,
+      ano: this.formulario.value.ano,
       mes_id: this.formulario.value.mes,
       motoristas_por_dia: this.formulario.value.intervalo
     };
@@ -165,12 +155,16 @@ export class DefineescalaComponent implements OnInit {
       (resp: any) => {
 
         if (resp.status === true) {
-          this.swal.swalCustom('Escala Mensal', `Foi gerada uma escala mensal com ${data.motoristas_por_dia} motoriasta/dia`, 2000, true);
+          this.swal.swalCustom('Sucesso', `Escala gerada com ${data.motoristas_por_dia} motoriasta/dia`, 5000, true);
+          this.formulario.reset();
+          this.loading = false;
         } else {
+          this.loading = false;
           this.swal.swalTitleText(
-            'Cadastro de Escala',
-            `Não foi possível gerar a escala mensal!`, 'error');
+            'Erro',
+            `Não foi possível gerar a escala!`, 'error');
         }
+
       }
     )
 
@@ -214,8 +208,5 @@ export class DefineescalaComponent implements OnInit {
     this.gruposEscalados();
 
   }
-
-
-
 
 }

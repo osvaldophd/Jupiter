@@ -1,43 +1,42 @@
-
-<header class="section-header" >
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-login">
-    <div class="container">
-      <a class="navbar-brand" routerLink="/boleia">
-        <img class="logo-marca" src="./../../../assets/img/Carro-logo.png" />
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<header class="section-header">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-login">
+        <div class="container">
+            <a class="navbar-brand" routerLink="/user">
+                <img class="logo-marca" src="./../../../assets/img/Carro-logo.png" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a  routerLink="/boleia" routerLinkActive="selecionado" class="nav-link" >Home</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="escala" routerLinkActive="selecionado" class="nav-link" >Escala</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="motorista" routerLinkActive="selecionado" class="nav-link">Motoristas</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="van" routerLinkActive="selecionado"  class="nav-link">Vans</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <img class="rounded-circle" src="{{ apiPath }}{{ usuarioPhoto }}" width="30px" height="30px" >
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" routerLink="conta" >Minha Conta</a>
-              <a (click)="logout()" class="dropdown-item link-logout" >Sair</a>
+            <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a routerLink="/user" routerLinkActive="selecionado" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="escala" routerLinkActive="selecionado" class="nav-link">Escala</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="motorista" routerLinkActive="selecionado" class="nav-link">Motoristas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="van" routerLinkActive="selecionado" class="nav-link">Vans</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle" src="{{ apiPath }}/uploads/funcionarios/{{ usuarioPhoto }}" width="30px" height="30px">
+                        </a>
+                        <div class="dropdown-menu" style="left: -100%; margin-top: 15px;">
+                            <a *ngIf="roles" class="dropdown-item" (click)="painelAdmin()" style="cursor: pointer;">Painel Administrativo</a>
+                            <a class="dropdown-item" routerLink="conta">Minha Conta</a>
+                            <a (click)="logout()" class="dropdown-item link-logout">Sair</a>
+                        </div>
+                    </li>
+
+                </ul>
             </div>
-          </li>
 
-        </ul>
-      </div>
-
-    </div>
-  </nav>
+        </div>
+    </nav>
 
 </header>

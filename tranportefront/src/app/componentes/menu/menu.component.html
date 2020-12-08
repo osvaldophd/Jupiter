@@ -1,67 +1,75 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-login">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img class="logo-marca" src="./../../../assets/img/Carro-logo.png" />
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img class="logo-marca" src="./../../../assets/img/Carro-logo.png" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
+      <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary-theme-vermelho px-4 link ml-1">
+        <i class="far fa-user"></i> Login
       </button>
 
-      <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarSupportedContent">
-        <button  data-toggle="modal" data-target="#exampleModal"  class="btn btn-primary-theme-vermelho px-4 link ml-1">
-          <i class="far fa-user"></i> Login
-        </button>
-        <!-- <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#baixarapp">Baixar App</a>
-          </li>
-          <li class="nav-item" style="cursor: pointer;" >
-            <a class="nav-link"  data-toggle="modal" data-target="#exampleModal" >Login</a>
-          </li>
-        </ul> -->
-      </div>
-
     </div>
-  </nav>
 
-  <div class="modal fade section-modal-login" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <h1 class="h2 text-center mb-5">Login</h1>
-            <div class="error-section " *ngIf="errors">
-              <div class="alert alert-danger text-center "><b>Erro ao efectuar Login</b><br> Porfavor verifique as suas credencias</div>
-            </div>
-            <form class="form form-login" [formGroup]="formlogin" (ngSubmit)="login()">
-                <div class="">
-                  <input formControlName="email" type="email" id="email" class="login-input form-control btn-rounded"
-                    placeholder="Seu melhor email" formControlName="email" required>
-                </div>
-                <div class="">
-                  <input formControlName="password" type="password" class="login-input form-control btn-rounded mt-4"
-                    placeholder="Sua melhor senha" required>
-                </div>
+  </div>
+</nav>
 
-                <div class="btn-control">
-                  <button type="submit" [disabled]="!formLogin.valid"
-                    class="btn-theme  btn-primary-theme btn-semi-round btn-full " (click)="closeModal(closemodal)">
-                    Entrar
-                  </button>
-                </div>
-                <button style="display: none; visibility: hidden;" #closemodal class="btn-login-cancel d-block mt-3 mb-5" data-dismiss="modal"></button>
-
-              </form>
-        </div>
-
+<div class="modal fade section-modal-login" id="exampleModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        <div class="logo-marca-login">
+          <img class="logo-modal" src="./../../../assets/img/logo.png" />
+        </div>
+
+        <h1 class="h2 text-center mb-5">Iniciar sess&atilde;o</h1>
+        <div class="error-section " *ngIf="errors">
+          <div class="alert alert-danger text-center "><b>Erro ao efectuar Login</b><br> Porfavor verifique as suas
+            credencias</div>
+        </div>
+        <form class="form form-login" [formGroup]="formlogin" (ngSubmit)="login()">
+          <div class="">
+            <input formControlName="email" type="email" id="email" class="login-input form-control btn-rounded"
+              placeholder="Usuário Jupiter" formControlName="email" required>
+          </div>
+          <div class="">
+            <input formControlName="password" type="password" class="login-input form-control btn-rounded mt-4"
+              placeholder="Sua senha" required>
+          </div>
+
+          <div *ngIf="!loading" class="btn-control">
+            <button type="submit" [disabled]="!formlogin.valid"
+              class="btn-theme  btn-primary-theme btn-semi-round btn-full " (click)="closeModal(closemodal)">
+              Entrar
+            </button>
+          </div>
+          <div *ngIf="loading" class="row justify-content-center mt-5 pl-auto pr-auto">
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+          <button  style="display: none; visibility: hidden;" #closemodal
+            class="btn-login-cancel d-block mt-3 mb-5" data-dismiss="modal"></button>
+        </form>
+      </div>
+
     </div>
   </div>
+</div>

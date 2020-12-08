@@ -19,11 +19,11 @@
   <div class="col-md-6 ">
     <div class="container bg-white pb-4">
       <ul class="row list-group">
-        <li class="list-group-item bbg-secondary bcolor-white bborder-radius-none">Adicionar Marca de Van</li>
+        <li class="list-group-item bbg-secondary bcolor-white bborder-radius-none">Cadastrar Marca</li>
       </ul>
       <form [formGroup]="formaddmarca" class="px-2" (ngSubmit)="createMarca()">
         <div class="form-group mt-4">
-          <label for="exampleInputEmail1 ">Marca</label>
+          <label for="exampleInputEmail1 ">Nome</label>
           <input formControlName="nome" type="email" class="form-control" placeholder="Informe o nome marca">
           <div *ngIf="(nome.touched) &&  nome.invalid" class="">
             <div class="color-error" *ngIf="nome.errors.required">
@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <button type="submit" [disabled]="!formaddmarca.valid" class="btn btn-success bborder-radius-none mt-4">Adicionar Marca</button>
+        <button type="submit" [disabled]="!formaddmarca.valid" class="btn btn-success bborder-radius-none mt-4">Cadastar</button>
       </form>
     </div>
   </div>

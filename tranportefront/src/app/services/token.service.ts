@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
+import { Usuario } from 'src/app/models/usuariologin';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,11 @@ export class TokenService {
 
   constructor() { }
 
-  setToken(user:any){
-    localStorage.setItem('usuario', user.token);
-    localStorage.setItem('funcionario', JSON.stringify(user.usuario.funcionario));
+  setToken(token, funcionario: Usuario){
+    localStorage.setItem('usuario', token);
+    localStorage.setItem('funcionario', JSON.stringify(funcionario));
   }
+
 
   removerToken(){
     localStorage.removeItem('usuario');
@@ -23,9 +26,10 @@ export class TokenService {
   verifyToken(): boolean {
 
     if(localStorage.getItem('usuario')){
-
         return true;
      }
+     
+    this.removerToken();
     return false;
   }
 

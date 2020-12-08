@@ -2,7 +2,7 @@ import { Contacto } from 'src/app/models/contacto.model';
 
 
 export class Van {
-    id: number;
+    id?: number;
     matricula: string;
     descricao: string;
     modelo: string;

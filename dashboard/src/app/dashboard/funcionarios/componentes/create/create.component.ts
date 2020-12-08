@@ -1,3 +1,5 @@
+import { MessageService } from './../../../../shared/services/mensage.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Funcionarios } from 'src/app/models/funcionarios.model';
@@ -31,15 +33,14 @@ export class CreateComponent implements OnInit {
     telefone: [/[0-9]/, /[0-9]/, /[0-9]/, ' ', /[0-9]/, /[0-9]/, /[0-9]/, ' ', /[0-9]/, /[0-9]/, /[0-9]/],
     bi: [/[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, /[A-Z]/, /[A-Z]/, /[0-9]/, /[0-9]/, /[0-9]/]
   };
+  arraySubscription: Array<Subscription> = new Array<Subscription>();
 
   constructor(private fb: FormBuilder,
     private funcionarioService: FuncionariosService,
     private cd: ChangeDetectorRef,
-    private swalService: SwalService,
+    private messageService: MessageService,
     private municipiosService: MunicipiosService
-  ) { }
-
-  ngOnInit() {
+  ) {
 
     this.usuario = this.fb.group({
       nome: ['', Validators.required],
@@ -69,32 +70,36 @@ export class CreateComponent implements OnInit {
       }),
 
     });
+  }
+
+  ngOnInit() {
 
     this.pesquisaMunicipios();
-
 
   }
   // Fim do construtor
 
   get f() { return this.usuario.controls; }
-  get fu() {  return this.usuario.get('usuario').controls;  }
-  get fm() {  return this.usuario.get('morada').controls; }
+  get fu() { return this.usuario.get('usuario').controls; }
+  get fm() { return this.usuario.get('morada').controls; }
 
   pesquisaMunicipios() {
-    this.municipiosService.getMunicipios().pipe(
-      finalize(()=> {
-        this.loading =false;
+   const municipioSubscriptions = this.municipiosService.getMunicipios().pipe(
+      finalize(() => {
+        this.loading = false;
       })
     ).subscribe(
       (res) => {
         this.municipios = res;
         this.municipios = this.municipios.municipios;
-        
+
       },
       (error) => {
-        
+
       }
     )
+
+    this.arraySubscription = [...this.arraySubscription,municipioSubscriptions];
   }
 
   pesquisaBairro() {
@@ -143,9 +148,10 @@ export class CreateComponent implements OnInit {
   create() {
 
     this.submitted = true;
+    this.loading = true;
 
     if (this.usuario.invalid) {
-      this.swalService.swalTitleText('Erro ao Processar o cadastro', `Por favor preencha todos os campos!`, 'error');
+      this.messageService.mensage('Erro ao Processar o cadastro', `Por favor preencha todos os campos!`, 'error');
       return false;
     }
 
@@ -162,7 +168,8 @@ export class CreateComponent implements OnInit {
       usuario: {
         name: this.usuario.value.nome,
         email: this.usuario.value.usuario.email,
-        password: 'Jupiter2019'
+        password: 'Jupiter2019',
+        roles: [this.usuario.get('roles').value]
       },
       contactos: this.usuario.value.contactos,
       morada: {
@@ -174,20 +181,23 @@ export class CreateComponent implements OnInit {
       roles: [this.usuario.get('roles').value]
     };
 
-    this.funcionarioService.create(dados).subscribe(
+    const funcionarioSubscriptions = this.funcionarioService.create(dados).subscribe(
       (res: any) => {
+        this.loading = false;
         if (res.status === 'fail') {
-          this.swalService.swalTitleText('Cadastro de Funcionário', `O colaborador ${dados.nome}  foi cadastrado`, 'error');
+          this.messageService.mensage('Erro', `Funcionário ${dados.nome}  não foi cadastrado`, 'error');
         } else {
-          this.swalService.swalTitleText('Cadastro de Funcionário', `O colaborador ${dados.nome} foi cadastrado`, 'success');
+          this.messageService.mensage('Sucesso', `Funcionário ${dados.nome} foi cadastrado`, 'success');
           this.onReset();
         }
       },
       (error) => {
-        
+
 
       }
     )
+    this.arraySubscription = [...this.arraySubscription, funcionarioSubscriptions];
+    this.loading = false;
 
   }
 

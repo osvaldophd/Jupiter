@@ -1,60 +1,59 @@
-
 <div *ngIf="loading">
-	<app-loading></app-loading>
+  <app-loading></app-loading>
 </div>
 
 <div *ngIf="!loading" class="row">
-	<div  class="col-6 order-2">
-		<div class="card bg-dark noborder">
-		<img class="card-img" src="{{api_path}}{{van.imagem}}" alt="Card image">
-		<!-- <div class="card-img-overlay bg-dark" style="opacity: .8;">
+  <div class="col-md-6 col-sm-12 order-2">
+    <div class="card bg-dark noborder">
+      <img class="card-img" src="{{api_path}}uploads/vans/{{van.imagem}}" alt="Card image">
+      <!-- <div class="card-img-overlay bg-dark" style="opacity: .8;">
 			<p class="card-text">{{van.descricao}}</p>
 		</div> -->
-		</div>
-	</div>
-	<div class="col-6 order-1">
-		<div class="card">
-			<div class="card-header bg-warning">
-				<h5 class="card-title">Detalhes</h5>
-			</div>
-			<ul class="list-group list-group-flush">
-			  <li class="list-group-item">
-				<ul>
-					Dethalhe
-					<li class="list-group-item">
-						Marca
-						<p>{{van.modelo.marca.nome}}</p>
-					</li>
-					<li class="list-group-item">
-						Modelo
-						<p>{{van.modelo.nome}}</p>
-					</li>
-					<li class="list-group-item">
-						Matricula
-						<p>{{van.matricula}}</p>
-					</li>
-				</ul>
-				<!-- {{van.modelo.marca.nome}}
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 order-1">
+    <div class="card">
+      <div class="card-header bg-warning">
+        <h5 class="card-title">Detalhes</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <ul>
+            <li class="list-group-item">
+              <strong>Marca</strong>
+              <p>{{van.modelo.marca.nome}}</p>
+            </li>
+            <li class="list-group-item">
+              <strong> Modelo</strong>
+              <p>{{van.modelo.nome}}</p>
+            </li>
+            <li class="list-group-item">
+              <strong>Matricula</strong>
+              <p>{{van.matricula}}</p>
+            </li>
+          </ul>
+          <!-- {{van.modelo.marca.nome}}
 				<p>{{van.modelo.nome}}</p>
 				<p>{{van.matricula}}</p> -->
 
-			  </li>
-			  <li class="list-group-item">
-				contactos
-				<ul *ngFor="let contacto of van.contactos">
-					<li class="list-group-item">{{contacto.contacto}}</li>
-				</ul>
-			  </li>
-			  <li class="list-group-item">
-					Descrição
-					<p>{{van.descricao}}</p>
-				</li>
-			  <li class="list-group-item">
-				<a [routerLink]="['/vans/update/', van.id]" class="btn btn-primary mr-4">Editar Van</a> <a (click)="delete(van)" class="btn btn-outline-danger text-danger">Eliminar</a>
-				</li>
+        </li>
+        <li class="list-group-item">
+          <strong>contactos</strong>
+          <ul *ngFor="let contacto of van.contactos">
+            <li class="list-group-item">{{contacto.contacto}}</li>
+          </ul>
+        </li>
+        <li class="list-group-item">
+          <strong>Descrição</strong>
+          <p>{{van.descricao}}</p>
+        </li>
+        <li class="list-group-item">
+          <a [routerLink]="['/vans/update/', van.id]" class="btn btn-outline-primary mr-2">Editar</a>
+          <a (click)="delete(van)" class="btn btn-outline-danger mr-2">Eliminar</a>
+        </li>
 
-			</ul>
-		  </div>
-	</div>
+      </ul>
+    </div>
+  </div>
 
 </div>

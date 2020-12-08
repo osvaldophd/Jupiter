@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { tap, delay, catchError, map } from 'rxjs/operators';
 import { TokenService } from './token.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { error } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +12,31 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   api = environment.API;
+  isLoggedIn = true;
 
   constructor(private http: HttpClient, private token: TokenService) { }
-  isLoggedIn = false;
+
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  login(usuario): Observable<any> {
+  login(usuario): Observable<any>{
 
-  return this.http.post(`${this.api}/login`, usuario).pipe(
-      delay(1000),
-      tap((val: any) => {
+    return this.http.post<any>(`${this.api}/login`, usuario).pipe(
+      tap( (val: any) => {
         this.isLoggedIn = true;
       })
-    );
+    )
+
+
+  }
+
+  getUserReload(): Observable<any> {
+    return       this.http.get(`${this.api}/me`, {
+      headers: new HttpHeaders()
+      .set('Authorization', `Bearer ${localStorage.getItem('usuario')}`)
+      .set('Content-Type', 'application/json')
+    });
   }
 
   logout(): void {

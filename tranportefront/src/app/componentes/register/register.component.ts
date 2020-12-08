@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { UserRegister } from 'src/app/models/registarUser.model';
-import { Usuario } from 'src/app/contactos.model.ts/usuario.model';
 
 @Component({
   selector: 'app-register',

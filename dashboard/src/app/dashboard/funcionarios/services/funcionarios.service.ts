@@ -20,7 +20,7 @@ export class FuncionariosService {
   getAllMotoristas(): Observable<Funcionario> {
     return this.http.get<Funcionario>(`${this.api}funcionarios/motoristas`);
   }
-  
+
   getById(id: number): Observable<Funcionario> {
     return this.http.get<Funcionario>(`${this.api}funcionarios/${id}`)
   }

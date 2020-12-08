@@ -1,3 +1,4 @@
+import { Usuario } from './../../models/modelfuncionario';
 import { Component, OnInit } from '@angular/core';
 import { FuncionariosService } from '../../services/funcionarios.service';
 import { Funcionarios } from 'src/app/models/funcionarios.model';
@@ -6,6 +7,8 @@ import { environment } from 'src/environments/environment';
 import { SwalService } from 'src/app/services/swal.service';
 import { finalize } from 'rxjs/operators';
 import { PaginatorService } from 'src/app/shared/services/paginator.service';
+import { Profile } from 'src/app/dashboard/profile/profile.modul';
+import { ProfileService } from 'src/app/dashboard/profile/services/profile.service';
 
 @Component({
   selector: 'app-list',
@@ -23,21 +26,28 @@ export class ListComponent implements OnInit {
   paginator: Array<any> = [];
   pageData: any;
   pageActive: number = 1;
+  me: Profile;
 
   constructor(
     private funcionarios: FuncionariosService,
     private swalService: SwalService,
-    private paginatorService: PaginatorService
+    private paginatorService: PaginatorService,
+    private profileService: ProfileService
   ) {
-    
+
   }
 
   ngOnInit() {
     this.getFuncionarios();
+
+    this.profileService.getAll()
+      .subscribe((res: any) => {
+        this.me = res;
+      });
   }
 
   getPage(page) {
-    this.pageActive = (page)? page : 1 ;
+    this.pageActive = (page) ? page : 1;
     this.paginatorService.setPage(page);
     this.pageData = this.paginatorService.getData();
     this.paginator = this.paginatorService.getPages();
@@ -66,16 +76,15 @@ export class ListComponent implements OnInit {
       (response: any) => {
         this.dados = response;
       },
-      (error) => {    }
+      (error) => { }
     )
   }
 
   pesquisar(pesquisa) {
-
     this.pesquisaOn = false;
     this.pesquisaR = [];
 
-    if (pesquisa != '') {
+    if (pesquisa != null) {
 
 
       const funcionarios: Array<any> = this.dados
@@ -112,14 +121,13 @@ export class ListComponent implements OnInit {
     return text;
   }
 
-
   delete(dados: any) {
 
     const handlerCallback = () => {
       this.funcionarios.deteteFnc(+dados.id)
         .subscribe((res) => {
 
-          this.swalService.swalCustom('Colaborador Eliminado', `O colaborador <strong> ${dados.nome} <strong> foi removido!`, 1000, true)
+          this.swalService.swalTitleText('Sucesso', `O colaborador <strong> ${dados.nome} <strong> foi eliminado!`, 'success');
           this.getFuncionarios();
           if (this.pesquisaOn) {
             const pos = this.pesquisaR.indexOf(dados);
@@ -138,6 +146,10 @@ export class ListComponent implements OnInit {
       handlerCallback
     );
   }
-
-
+  userLogado(user: Usuario):boolean{
+    if (this.me.email === user.email) {
+      return true;
+    }
+    return false;
+  }
 }

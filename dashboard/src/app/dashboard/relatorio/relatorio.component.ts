@@ -66,14 +66,13 @@ export class RelatorioComponent implements OnInit {
     if(!this.serachParams.dataIni || !this.serachParams.dataFin){
       this.toDay();
     }
-    console.log(this.serachParams);
     this.relatoriosService.getRelatorios(this.serachParams).subscribe(
       (response: ResponseRelatorios) => {
         this.motoristas = response.data.motoristas;
         this.viagens = response.data.viagens;
       },
       (erro) => {
-        console.log(erro);
+
       }
     );
   }

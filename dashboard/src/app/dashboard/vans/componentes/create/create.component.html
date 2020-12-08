@@ -1,4 +1,4 @@
-<h1 class="title-page text-dark" style="margin-top: -60px;">Adicionar Van</h1>
+<h1 class="title-page text-dark" style="margin-top: -60px;">Cadastrar Van</h1>
 <div class="col-12 list-users bg-white">
 
   <div class="">
@@ -18,6 +18,7 @@
                 *Campo obrigatório. Selecione a marca
               </div>
             </div>
+
             <div class="form-group">
               <label for="vat" class=" form-control-label">Modelo</label>
               <select
@@ -30,6 +31,7 @@
                 *Campo obrigatório. Selecione o modelo
               </div>
             </div>
+
             <div class="form-group">
               <label for="matricula" class=" form-control-label">Matricula</label>
               <input [ngClass]="{ 'form-msg-errors-input': (fv.matricula.errors?.required == true) && ((fv.matricula.dirty == true) || (fv.matricula.touched == true))  }"
@@ -40,15 +42,27 @@
                 *Campo obrigatório. Informe a matricula
               </div>
             </div>
+
+            <div class="form-group">
+              <label for="ano_aquisicao" class=" form-control-label">Ano/Aquisição</label>
+              <input formControlName="ano_aquisicao" type="number" name="ano_aquisicao" id="ano_aquisicao" class="form-control"
+              [ngClass]="{ 'form-msg-errors-input': (fv.ano_aquisicao.errors?.required == true) && ((fv.ano_aquisicao.dirty == true) || (fv.ano_aquisicao.touched == true))  }">
+              <div class="text-danger form-msg-errors"
+                *ngIf="(fv.ano_aquisicao.errors?.required == true) && ((fv.ano_aquisicao.dirty == true) || (fv.ano_aquisicao.touched == true))">
+                *Campo obrigatório. Informe o numero de ocupantes
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="nr_ocupantes" class=" form-control-label">Nº de ocupantes</label>
-              <input formControlName="nr_ocupantes" name="nr_ocupantes" id="nr_ocupantes" class="form-control"
+              <input formControlName="nr_ocupantes" min="1" max="130" name="nr_ocupantes" id="nr_ocupantes" class="form-control"
               [ngClass]="{ 'form-msg-errors-input': (fv.nr_ocupantes.errors?.required == true) && ((fv.nr_ocupantes.dirty == true) || (fv.nr_ocupantes.touched == true))  }">
               <div class="text-danger form-msg-errors"
                 *ngIf="(fv.nr_ocupantes.errors?.required == true) && ((fv.nr_ocupantes.dirty == true) || (fv.nr_ocupantes.touched == true))">
                 *Campo obrigatório. Informe o numero de ocupantes
               </div>
             </div>
+
             <div class="form-group">
               <label for="vat" class=" form-control-label">Descrição</label>
               <textarea formControlName="descricao" class="form-control"
@@ -62,9 +76,8 @@
           </div>
         </div>
       </div>
+
       <div class="col-lg-6 pr-5 " style="padding-top: 18px;">
-
-
         <div formArrayName="contactos" class="form-group">
           <label for="company" class=" form-control-label">Telefone</label>
           <div class="row itens-align-start">
@@ -83,7 +96,7 @@
                       <div *ngIf="(fv.contactos.controls[i].controls.contacto.errors?.required == true ) && ((fv.contactos.controls[i].controls.contacto.dirty == true) || (fv.contactos.controls[i].controls.contacto.touched == true))" class="text-danger form-msg-errors">
                           *Campo obrigatório. Informe o numero de telefone
                       </div>
-           
+
                   </div>
 
 
@@ -102,11 +115,10 @@
 
         </div>
 
-
         <div class="form-group">
           <span class="mt-2 d-block h5">Foto da Van</span>
           <div class="form-vans-photo d-block text-center">
-            <img src="{{(fileImg)? fileImg : defaultImg }}" alt="Alterar Foto">
+            <img src="{{(fileImg) ? fileImg : defaultImg }}" alt="Alterar Foto">
             <label for="file" class="pe-7s-cloud-upload vans-btn-upload-file"></label>
             <input type="file" class="custom-file-input vans-input-upload-file" id="file"
               aria-describedby="Foto do motorista" formControlName="imagem" (change)="readphoto($event.target.files)">
@@ -117,11 +129,11 @@
         </div>
 
       </div>
+
       <div class="col-12">
         <div class="card-body card-block">
-          <button type="submit" [disabled]="!form.valid" class="btn btn-lg btn-success mb-4">Guardar</button>
+          <button type="submit" [disabled]="!form.valid" class="btn btn-lg btn-success mb-4">Cadastrar</button>
         </div>
-
       </div>
     </form>
     <div>

@@ -91,7 +91,7 @@ export class ListDetailComponent implements OnInit {
   }
 
   handleDateClick(arg) {
-   
+
   }
 
   modifyTitle(eventIndex, newTitle) {
@@ -127,14 +127,14 @@ export class ListDetailComponent implements OnInit {
       },
       (error) => {
 
-        
+
       });
 
     this.funcionario.getEscala(+id).subscribe((res: any) => {
       this.escala = res.data;
-      
+
       this.escala.forEach((data, i) => {
-        
+
         const datas = `${data.escala.ano}-${this.fomatarData(data.escala.mes_id)}-${this.fomatarData(data.dia)}`;
         const resp: CalendarioEvento = {
           title: this.funcionarios.nome,
@@ -152,7 +152,7 @@ export class ListDetailComponent implements OnInit {
     const callback = () => {
 
       this.calendarEvents = this.calendarioEvento;
-      
+
 
     };
 
@@ -165,14 +165,14 @@ export class ListDetailComponent implements OnInit {
     const handlerCallback = () => {
       this.funcionario.deteteFnc(+dados.id)
         .subscribe((res) => {
-          
-          this.swal.swalCustom('Colaborador Eliminado', `O colaborador <strong> ${dados.nome} <strong> foi removido!`, 1000, true)
+
+          this.swal.swalTitleText('Sucesso', `O colaborador <strong> ${dados.nome} <strong> foi eliminado!`, 'success');
           this.ngOnInit();
         });
     };
 
 
-    
+
     this.swal.swalConfirmation(
       'Eliminar Colaborador',
       `Deseja eliminar o colaborador ${dados.nome}?`,

@@ -1,260 +1,251 @@
 <div *ngIf="loading">
-  <app-loading></app-loading>
+    <app-loading></app-loading>
 </div>
 <div *ngIf="!loading">
 
-  <div class="px-5">
-    <div class="row justify-content-start">
-      <div class=" col-12 mt-3">
-        <div class="card-header" style="background: transparent;">
-          <h5 class="card-title pt-2">Definir Escala</h5>
-        </div>
-        <div class="">
-          <form [formGroup]="formulario" (ngSubmit)="create()">
-            <div class="row">
-              <div class="col-3 mt-2">
-                <div class="form-group ">
-                  <label for="exampleFormControlSelect1">Selecione o mês</label>
-                  <select formControlName="mes" class="form-control" id="exampleFormControlSelect1">
-                    <option value="1">Janeiro</option>
-                    <option value="2">Fevereiro</option>
-                    <option value="3">Março</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Maio</option>
-                    <option value="6">Junho</option>
-                    <option value="7">Julho</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>
-                  </select>
+    <div class="px-5">
+        <div class="row justify-content-start">
+            <div class=" col-12 mt-3">
+                <div class="card-header" style="background: transparent;">
+                    <h5 class="card-title pt-2">Definir Escala</h5>
                 </div>
-              </div>
-              <div class="col-3 mt-2">
-                <div class="form-group ">
-                  <label for="exampleFormControlSelect1">Nº de Motoristas / Dia</label>
-                  <select (change)="numeroGrupo($event.target.value)" formControlName="intervalo" class="form-control"
-                    id="exampleFormControlSelect1">
-                    <option value="1">1 Motorista</option>
-                    <option value="2">2 Motoristas</option>
-                    <option value="3">3 Motoristas</option>
-                    <option value="4">4 Motoristas</option>
-                    <option value="5">5 Motoristas</option>
-                  </select>
-                </div>
-  
-              </div>
-              <!-- <div class="col-3">
-  
-                <div class="form-group ">
-                  <label for="exampleFormControlSelect1">Selecione os funcionarios</label>
-                  <div (click)="addfunctionarios()" type="button" data-toggle="modal" data-target="#adicionarfuncionarios"
-                    class="btn btn-light w-100 border border-ligh">+ funcionarios</div>
-                </div>
-              </div> -->
-  
-              <div class="col-6 d-flex flex-column justify-content-center">
                 <div class="">
-                  <button type="submit" class="btn w-100 btn-success mt-3 ">Gerar Escala</button>
-  
+                    <form [formGroup]="formulario" (ngSubmit)="create()">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-4 mt-2">
+                                <div class="form-group ">
+                                    <label for="exampleFormControlSelect1">Selecione o mês</label>
+                                    <select formControlName="mes" class="form-control" id="exampleFormControlSelect1">
+                                        <option value="1">Janeiro</option>
+                                        <option value="2">Fevereiro</option>
+                                        <option value="3">Março</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Maio</option>
+                                        <option value="6">Junho</option>
+                                        <option value="7">Julho</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Setembro</option>
+                                        <option value="10">Outubro</option>
+                                        <option value="11">Novembro</option>
+                                        <option value="12">Dezembro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 mt-2">
+                                <div class="form-group ">
+                                    <label for="exampleFormControlSelect1">Selecione o Ano</label>
+                                    <select formControlName="ano" class="form-control" id="exampleFormControlSelect3">
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 mt-2">
+                                <div class="form-group ">
+                                    <label for="exampleFormControlSelect1">Nº de Motoristas / Dia</label>
+                                    <select (change)="numeroGrupo($event.target.value)" formControlName="intervalo" class="form-control" id="exampleFormControlSelect1">
+                                        <option value="1">1 Motorista</option>
+                                        <option value="2">2 Motoristas</option>
+                                        <option value="3">3 Motoristas</option>
+                                        <option value="4">4 Motoristas</option>
+                                        <option value="5">5 Motoristas</option>
+                                        <option value="6">6 Motoristas</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="col-6 d-flex flex-column justify-content-center" *ngIf="formulario.valid">
+                                <div class="">
+                                    <button type="submit" class="btn w-100 btn-success mt-3 ">Gerar Escala</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
-              </div>
-  
             </div>
-  
-  
-          </form>
         </div>
-      </div>
-  
-  
-  
-  
-  
-  
-  
-  
-    </div>
-  
-    <div class="row">
-      <div class="col-6">
-        <h2 class="h5">Selecione os funcionarios</h2>
-        <div class="form-group">
-          <input #onPesquisar (keyup)="pesquisar(onPesquisar.value)" type="text" class="form-control"
-            placeholder="Pesquisar por Motorista">
-        </div>
-        <ng-template *ngIf="pesquisaOn; then resultPesquisa; else notPesquisa"> </ng-template>
-  
-        <ng-template #resultPesquisa>
-  
-          <ng-template *ngIf="resultadoPesquisa.length != 0; then resOnPesquisa ; else resOffPesquisa "> </ng-template>
-  
-          <ng-template #resOnPesquisa>
-            <ul class="list-group list-group-flush list-user" style="overflow-y: scroll; height: 500px">
-              <li *ngFor="let funcionario of resultadoPesquisa" class="list-group-item boxes">
-                <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}"
-                  type="checkbox" id="gridCheck{{funcionario.id}}" [checked]="funcionario.checked">
-                <label for="gridCheck{{funcionario.id}}"> <img src="{{api_path}}{{funcionario.imagem}}"
-                    class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
-              </li>
-            </ul>
-          </ng-template>
-  
-          <ng-template #resOffPesquisa>
-  
-            <div class="alert alert-danger" role="alert">
-              Nao foram encontrado resultado
-            </div>
-  
-          </ng-template>
-  
-        </ng-template>
-        <ng-template #notPesquisa>
-          <ul class="list-group list-group-flush list-user" 3>
-            <li *ngFor="let funcionario of funcionarios" class="list-group-item boxes">
-  
-              <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}"
-                type="checkbox" id="gridCheck{{funcionario.id}}" [checked]="funcionario.checked">
-              <label for="gridCheck{{funcionario.id}}"> <img src="{{api_path}}{{funcionario.imagem}}"
-                  class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
-  
-            </li>
-          </ul>
-        </ng-template>
-  
-  
-  
-  
-      </div>
-  
-  
-      <div class="col-6">
-        <div class="card col-12" [hidden]="escalados == false" style="overflow-y: scroll; height: 500px">
-          <div class="card-header bg-white">
-            <h5 class="card-title">Escala de grupo</h5>
-          </div>
-          <ng-template *ngIf="nGrupos; then escaladosF; else boxNgrupo">
-  
-          </ng-template>
-          <ng-template #escaladosF>
-            <ul *ngFor="let ngrupos of grupoElescalados" class="list-group list-group-flush list-user mt-4">
-              <h4>Grupo N: {{ngrupos.grupo}}</h4>
-              <li *ngFor="let escalado of ngrupos.users" class="list-group-item boxes">
-                <label>
-                  <img src="{{api_path}}{{escalado.imagem}}" class="rounded-circle mr-2" width="20px"
-                    height="20px">{{escalado.nome}}
-                </label>
-  
-              </li>
-            </ul>
-          </ng-template>
-          <ng-template else #boxNgrupo>
-            <h3 class="mt-5 pt-5 col-10 text-center h3 escala-noexisteGrupo ml-auto mr-auto">Defina o numero de motoristas
-              por dia</h3>
-          </ng-template>
-  
-        </div>
-      </div>
-    </div>
-  
-  
-  
-  
-  
-  
-  </div>
-  
-  
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="adicionarfuncionarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-title col-md-8" id="exampleModalLabel">
-            <div class="form-group row" style="margin-bottom: -5px !important;">
-              <label for="" class="col-md-2 col-form-label">Pesquisar</label>
-              <div class="col-md-10 ml-auto">
-                <input name="funcionario" class="form-control" type="text" placeholder="Insira o nome de um funcionario">
-              </div>
-            </div>
-          </div>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-  
-  
-          <ul class="list-group list-group-flush list-user">
-            <li *ngFor="let funcionario of funcionarios" class="list-group-item boxes">
-              <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}"
-                type="checkbox" id="gridCheck{{funcionario.id}}">
-              <label for="gridCheck{{funcionario.id}}"> <img
-                  src="https://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg"
-                  class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
-            </li>
-          </ul>
-  
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Validar</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <div class="modal fade" id="adicionarfuncionarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-title col-md-8" id="exampleModalLabel">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <!-- <div class="col-auto">
-              <label class="sr-only" for="inlineFormInputGroup">Username</label>
-              <div class="input-group mb-2">
-                <div class="input-group-append">
-                  <div class=" btn btn-warning text-white">Pesquisar</div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <h2 class="h5">Selecione os funcionarios</h2>
+                <div class="form-group">
+                    <input #onPesquisar (keyup)="pesquisar(onPesquisar.value)" type="text" class="form-control" placeholder="Pesquisar por Motorista">
                 </div>
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
-              </div>
+                <ng-template *ngIf="pesquisaOn; then resultPesquisa; else notPesquisa"> </ng-template>
+
+                <ng-template #resultPesquisa>
+
+                    <ng-template *ngIf="resultadoPesquisa.length != 0; then resOnPesquisa ; else resOffPesquisa "> </ng-template>
+
+                    <ng-template #resOnPesquisa>
+                        <ul class="list-group list-group-flush list-user" style="overflow-y: scroll; height: 500px">
+                            <li *ngFor="let funcionario of resultadoPesquisa" class="list-group-item boxes">
+                                <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}" type="checkbox" id="gridCheck{{funcionario.id}}" [checked]="funcionario.checked">
+                                <label for="gridCheck{{funcionario.id}}">
+                                    <img src="{{api_path}}uploads/funcionarios/{{funcionario.imagem}}" class="rounded-circle mr-2" width="20px" height="20px">
+                                    {{funcionario.nome}}
+                                </label>
+                            </li>
+                        </ul>
+                    </ng-template>
+
+                    <ng-template #resOffPesquisa>
+
+                        <div class="alert alert-danger" role="alert">
+                            Nao foram encontrado resultado
+                        </div>
+
+                    </ng-template>
+
+                </ng-template>
+                <ng-template #notPesquisa>
+                    <ul class="list-group list-group-flush list-user">
+                        <li *ngFor="let funcionario of funcionarios" class="list-group-item boxes funcionario-item">
+
+                            <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}" type="checkbox" id="gridCheck{{funcionario.id}}" [checked]="funcionario.checked">
+                            <label for="gridCheck{{funcionario.id}}"> <img src="{{api_path}}/uploads/funcionarios/{{funcionario.imagem}}"
+                                class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
+
+                        </li>
+                    </ul>
+                </ng-template>
+
+
+
+
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="card col-12" [hidden]="escalados == false" style="overflow-y: scroll; height: 500px">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title">Escala de grupo</h5>
+                    </div>
+                    <ng-template *ngIf="nGrupos; then escaladosF; else boxNgrupo">
+
+                    </ng-template>
+                    <ng-template #escaladosF>
+                        <ul *ngFor="let ngrupos of grupoElescalados" class="list-group list-group-flush list-user mt-4">
+                            <h4>Grupo N: {{ngrupos.grupo}}</h4>
+                            <li *ngFor="let escalado of ngrupos.users" class="list-group-item boxes">
+                                <label>
+                                        <img src="{{api_path}}uploads/funcionarios/{{escalado.imagem}}" class="rounded-circle mr-2" width="20px"
+                                        height="20px">{{escalado.nome}}
+                                    </label>
+
+                            </li>
+                        </ul>
+                    </ng-template>
+                    <ng-template else #boxNgrupo>
+                        <h3 class="mt-5 pt-5 col-10 text-center h3 escala-noexisteGrupo ml-auto mr-auto">Defina o numero de motoristas por dia</h3>
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="adicionarfuncionarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title col-md-8" id="exampleModalLabel">
+                            <div class="form-group row" style="margin-bottom: -5px !important;">
+                                <label for="" class="col-md-2 col-form-label">Pesquisar</label>
+                                <div class="col-md-10 ml-auto">
+                                    <input name="funcionario" class="form-control" type="text" placeholder="Insira o nome de um funcionario">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <ul class="list-group list-group-flush list-user">
+                            <li *ngFor="let funcionario of funcionarios" class="list-group-item boxes">
+                                <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}"
+                                type="checkbox" id="gridCheck{{funcionario.id}}">
+                                <label for="gridCheck{{funcionario.id}}"> <img
+                                    src="https://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg"
+                                    class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Validar</button>
+                        </div>
+                    </div>
+                </div>
             </div> -->
-          </div>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <div class="modal fade" id="adicionarfuncionarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title col-md-8" id="exampleModalLabel">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <!-- <div class="col-auto">
+                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-append">
+                                            <div class=" btn btn-warning text-white">Pesquisar</div>
+                                        </div>
+                                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+                                    </div>
+                                </div> -->
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                </div>
+                <div class="modal-body">
+
+                    <ul class="list-group list-group-flush list-user">
+                        <li *ngFor="let escalado of escalados" class="list-group-item boxes">
+                            <label> <img src="https://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg"
+                                        class="rounded-circle mr-2" width="20px" height="20px">{{escalado.nome}}</label>
+                        </li>
+                    </ul>
+
+                    <ul class="list-group list-group-flush list-user">
+                        <li *ngFor="let funcionario of funcionarios" class="list-group-item boxes">
+
+                            <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}" type="checkbox" id="gridCheck{{funcionario.id}}">
+                            <label for="gridCheck{{funcionario.id}}"> <img
+                                            src="https://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg"
+                                            class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
+
+                        </li>
+                    </ul>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="gruposEscalados()" class="btn btn-secondary btn-success" data-dismiss="modal">Validar</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-  
-          <ul class="list-group list-group-flush list-user">
-            <li *ngFor="let escalado of escalados" class="list-group-item boxes">
-              <label> <img src="https://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg"
-                  class="rounded-circle mr-2" width="20px" height="20px">{{escalado.nome}}</label>
-            </li>
-          </ul>
-  
-          <ul class="list-group list-group-flush list-user">
-            <li *ngFor="let funcionario of funcionarios" class="list-group-item boxes">
-  
-              <input (change)="adicionarFuncionario($event)" class="option-input checkbox" value="{{funcionario.id}}"
-                type="checkbox" id="gridCheck{{funcionario.id}}">
-              <label for="gridCheck{{funcionario.id}}"> <img
-                  src="https://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg"
-                  class="rounded-circle mr-2" width="20px" height="20px">{{funcionario.nome}}</label>
-  
-            </li>
-          </ul>
-  
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="gruposEscalados()" class="btn btn-secondary btn-success"
-            data-dismiss="modal">Validar</button>
-        </div>
-      </div>
     </div>
-  </div>
 
 </div>

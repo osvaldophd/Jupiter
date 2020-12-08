@@ -1,67 +1,71 @@
 <div class="section-page jbg-white">
-  <div class="container">
-    <div class="row pt-2 pb-4 justify-content-center">
-      <h1 class="h3 jcolor-secondary text-center ">Escala Semanal</h1>
-    </div>
+    <div class="container">
+        <div class="row pt-2 pb-4 justify-content-center">
+            <h1 class="h3 jcolor-secondary text-center ">Escala Semanal</h1>
+        </div>
 
-    <div class="row justify-content-center">
-      <div class="col-12 mb-4 jcolor-primary text-center">
+        <div *ngIf="loading" class="row justify-content-center">
+            <div class="col-12">
+                <app-loading [mensagem]="mensagem"></app-loading>
+            </div>
+        </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center navbar-semanal">
+        <div *ngIf="!loading" class="row justify-content-center">
+            <div class="col-12 mb-4 jcolor-primary text-center">
 
-          <ul class="navbar-nav justify-content-center">
-            <li class="nav-item" [ngClass]="(dayActive == escalaS.dia)? 'activo' : '' " *ngFor="let escalaS of weekDays"
-              (click)="mudarMotorista(escalaS.dia)">
-              <a class="nav-link" style="cursor: pointer;">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center navbar-semanal">
+
+                    <ul class="navbar-nav justify-content-center">
+                        <li class="nav-item" [ngClass]="(dayActive == escalaS.dia)? 'activo' : '' " *ngFor="let escalaS of weekDays" (click)="mudarMotorista(escalaS.dia)">
+                            <a class="nav-link" style="cursor: pointer;">
                 {{ escalaS.dia}} {{ data(escalaS.dia, escalaS.mes, escalaS.ano) | date: 'EEEE' }}
               </a>
-            </li>
-          </ul>
+                        </li>
+                    </ul>
 
-        </nav>
-      </div>
+                </nav>
+            </div>
 
-      <div *ngIf="motorista; else elseBlock " class="row w-100 justify-content-center px-4">
-        <div   class="col-sm-12 col-md-3 mb-4" *ngFor="let motoristaDados of motorista">
-          <div class="card card-user-escala">
-            <img class="card-img-to rounded-circle" src="{{ enderecoIMG }}{{ motoristaDados.imagem }}"
-              alt="Card image cap" width="180px" height="180px">
-            <div class="card-body">
-              <h5 class="card-title jcolor-primary">{{ motoristaDados.nome }}</h5>
-              <p *ngIf="motoristaDados.contactos[0]" class="texto-centro ml-10 margin-bottom">
-                {{ motoristaDados.contactos[0].contacto }}<br />
-                <span *ngIf="motoristaDados.contactos[1]" class="texto-centro">
+            <div *ngIf="motorista; else elseBlock " class="row w-100 justify-content-center px-4">
+                <div class="col-sm-12 col-md-3 mb-4" *ngFor="let motoristaDados of motorista">
+                    <div class="card card-user-escala">
+                        <img class="card-img-to rounded-circle" src="{{ enderecoIMG }}/uploads/funcionarios/{{ motoristaDados.imagem }}" alt="Card image cap" width="180px" height="180px">
+                        <div class="card-body">
+                            <h5 class="card-title jcolor-primary">{{ motoristaDados.nome }}</h5>
+                            <p *ngIf="motoristaDados.contactos[0]" class="texto-centro ml-10 margin-bottom">
+                                {{ motoristaDados.contactos[0].contacto }}<br />
+                                <span *ngIf="motoristaDados.contactos[1]" class="texto-centro">
                   {{ motoristaDados.contactos[1].contacto }}
                 </span>
-              </p>
-  
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+
+
+
+            <ng-template #elseBlock>
+                <div class="col-6">
+                    <h1 class="h1 text-center jcolor-secondary mt-5 pt-5">Não existe escala para este dia!</h1>
+
+                </div>
+            </ng-template>
+
+
         </div>
-      </div>
 
 
+        <div>
 
 
-      <ng-template #elseBlock>
-        <div class="col-6">
-          <h1 class="h1 text-center jcolor-secondary mt-5 pt-5">Não existe escala para este dia!</h1>
-  
         </div>
-      </ng-template>
+
 
 
     </div>
-
-
-    <div>
-
-  
-    </div>
-
-
-
-  </div>
 
 
 

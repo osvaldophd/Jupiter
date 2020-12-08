@@ -1,9 +1,9 @@
 <div *ngIf="loading">
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </div>
 <div *ngIf="!loading">
 
-  <h1 class="title-page text-dark" style="margin-top: -60px;">Adicionar Funcionário</h1>
+  <h1 class="title-page text-dark" style="margin-top: -60px;">Cadastrar Funcionário</h1>
   <div class="col-12 list-users bg-white">
 
 
@@ -13,10 +13,10 @@
 
           <div class="col-2 form-funcionario-photo text-center">
             <img src="{{(fileData)? fileData : uploaded  }}"
-              class="rounded-circle ml-auto mr-auto funcionario-form-create-photo" alt="Alterar Foto">
+            class="rounded-circle ml-auto mr-auto funcionario-form-create-photo" alt="Alterar Foto">
             <label for="file" class="pe-7s-cloud-upload functionario-btn-upload-file"></label>
             <input type="file" class="custom-file-input functionario-input-upload-file" id="file"
-              aria-describedby="Foto do motorista" formControlName="imagem" (change)="readphoto($event.target.files)">
+            aria-describedby="Foto do motorista" formControlName="imagem" (change)="readphoto($event.target.files)">
             <span class="mt-2">Foto do funcionario</span>
           </div>
         </div>
@@ -29,209 +29,210 @@
             <div class="form-group">
               <label for="nome" class=" form-control-label">Nome</label>
               <input formControlName="nome" type="text" id="nome" placeholder="Insira o Nome" class="form-control"
-                [ngClass]="{ 'form-msg-errors-input': (f.nome.errors?.required == true) && ((f.nome.dirty == true) || (f.nome.touched == true))  }">
+              [ngClass]="{ 'form-msg-errors-input': (f.nome.errors?.required == true) && ((f.nome.dirty == true) || (f.nome.touched == true))  }">
               <div class="text-danger form-msg-errors"
-                *ngIf="(f.nome.errors?.required == true) && ((f.nome.dirty == true) || (f.nome.touched == true))">
-                *Campo obrigatório. Informe o nome
-              </div>
+              *ngIf="(f.nome.errors?.required == true) && ((f.nome.dirty == true) || (f.nome.touched == true))">
+              *Campo obrigatório. Informe o nome
             </div>
-            <div class="form-group">
-              <label for="bi" class=" form-control-label">Nº do BI</label>
-              <input formControlName="nr_bi" type="text" id="bi" placeholder="Inisira o Numero do Bilhete de Identidade"
-                class="form-control" [textMask]="{mask: mask.bi}"
-                [ngClass]="{ 'form-msg-errors-input': (f.nr_bi.errors?.required == true) && ((f.nr_bi.dirty == true) || (f.nr_bi.touched == true))  }">
-              <div class="text-danger form-msg-errors"
-                *ngIf="(f.nr_bi.errors?.required == true) && ((f.nr_bi.dirty == true) || (f.nr_bi.touched == true))">
-                *Campo obrigatório. Informe o nº do BI/Passaporte
-              </div>
+          </div>
+          <div class="form-group">
+            <label for="bi" class=" form-control-label">Nº do BI</label>
+            <input formControlName="nr_bi" type="text" id="bi" placeholder="Inisira o Numero do Bilhete de Identidade"
+            class="form-control" [textMask]="{mask: mask.bi}"
+            [ngClass]="{ 'form-msg-errors-input': (f.nr_bi.errors?.required == true) && ((f.nr_bi.dirty == true) || (f.nr_bi.touched == true))  }">
+            <div class="text-danger form-msg-errors"
+            *ngIf="(f.nr_bi.errors?.required == true) && ((f.nr_bi.dirty == true) || (f.nr_bi.touched == true))">
+            *Campo obrigatório. Informe o nº do BI/Passaporte
+          </div>
 
-            </div>
+        </div>
+        <div class="form-group">
+          <label for="country" class=" form-control-label">Nacionalidade</label>
+          <input formControlName="nacionalidade" type="text" id="country" placeholder="Insira a Nacionalidade"
+          class="form-control"
+          [ngClass]="{ 'form-msg-errors-input': (f.nacionalidade.errors?.required == true) && ((f.nacionalidade.dirty == true) || (f.nacionalidade.touched == true))  }">
+          <div class="text-danger form-msg-errors"
+          *ngIf="(f.nacionalidade.errors?.required == true) && ((f.nacionalidade.dirty == true) || (f.nacionalidade.touched == true))">
+          *Campo obrigatório. Informe uma nacionalidade.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="vat" class=" form-control-label">Sexo</label>
+        <select formControlName="genero" id="" class="form-control"
+        [ngClass]="{ 'form-msg-errors-input': submitted && f.genero.errors }">
+        <option [selected]="true" value="M">Masculino</option>
+        <option value="F">Mulher</option>
+      </select>
+      <div *ngIf="submitted && f.genero.errors " class="invalid-feedback text-danger">
+        <div *ngIf="f.genero.errors.required"> O gênero é obrigatório</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="date" class=" form-control-label">Data de Nascimento</label>
+      <input formControlName="data_nascimento" type="date" id="date" placeholder="" class="form-control"
+      [ngClass]="{ 'form-msg-errors-input': (f.data_nascimento.errors?.required == true) && ((f.data_nascimento.dirty == true) || (f.data_nascimento.touched == true))  }">
+      <div class="text-danger form-msg-errors"
+      *ngIf="(f.data_nascimento.errors?.required == true) && ((f.data_nascimento.dirty == true) || (f.data_nascimento.touched == true))">
+      *Campo obrigatório. Informe uma data de nascimento.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="mb-2">Definir Papel</div>
+    <div class="row">
+
+      <div class="col-4">
+        <input class="option-input checkbox" type="radio" id="papelutente" formControlName="roles" value="3"
+        [checked]="true"> <label for="papelutente">Utente</label>
+      </div>
+
+      <div class="col-4">
+        <input class="option-input checkbox" type="radio" id="papelmotorista" formControlName="roles"
+        value="1">
+        <label for="papelmotorista">Motorista</label>
+      </div>
+      <div class="col-4">
+        <input class="option-input checkbox" type="radio" id="papeladmin" value="2" formControlName="roles">
+        <label for="papeladmin">Administrador</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+</div>
+<div class="col-lg-6">
+  <div class="">
+    <div class="card-body card-block">
+      <!-- <div class="form-group">
+        <label for="street" class=" form-control-label">Foto do Motorista</label>
+        <input formControlName="imagem" (change)="readphoto($event.target.files)" type="file" id="street" placeholder=""
+        class="form-control-file">
+      </div> -->
+
+      <div formGroupName="morada">
+        <div class="row">
+          <div class="col-6">
             <div class="form-group">
-              <label for="country" class=" form-control-label">Nacionalidade</label>
-              <input formControlName="nacionalidade" type="text" id="country" placeholder="Insira a Nacionalidade"
-                class="form-control"
-                [ngClass]="{ 'form-msg-errors-input': (f.nacionalidade.errors?.required == true) && ((f.nacionalidade.dirty == true) || (f.nacionalidade.touched == true))  }">
-              <div class="text-danger form-msg-errors"
-                *ngIf="(f.nacionalidade.errors?.required == true) && ((f.nacionalidade.dirty == true) || (f.nacionalidade.touched == true))">
-                *Campo obrigatório. Informe uma nacionalidade.
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="vat" class=" form-control-label">Sexo</label>
-              <select formControlName="genero" id="" class="form-control"
-                [ngClass]="{ 'form-msg-errors-input': submitted && f.genero.errors }">
-                <option [selected]="true" value="M">Masculino</option>
-                <option value="F">Mulher</option>
+              <label for="company" class=" form-control-label">Municipio</label>
+              <select class="form-control" formControlName="municipio_id"
+              [ngClass]="{ 'form-msg-errors-input': (fm.municipio_id.errors?.required == true) && ((fm.municipio_id.dirty == true) || (fm.municipio_id.touched == true)) }">
+              <option (change)="pesquisaBairro()" *ngFor="let municipio of municipios" value="{{municipio.id}}">
+                {{municipio.nome}}</option>
               </select>
-              <div *ngIf="submitted && f.genero.errors " class="invalid-feedback text-danger">
-                <div *ngIf="f.genero.errors.required"> O gênero é obrigatório</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="date" class=" form-control-label">Data de Nascimento</label>
-              <input formControlName="data_nascimento" type="date" id="date" placeholder="" class="form-control"
-                [ngClass]="{ 'form-msg-errors-input': (f.data_nascimento.errors?.required == true) && ((f.data_nascimento.dirty == true) || (f.data_nascimento.touched == true))  }">
               <div class="text-danger form-msg-errors"
-                *ngIf="(f.data_nascimento.errors?.required == true) && ((f.data_nascimento.dirty == true) || (f.data_nascimento.touched == true))">
-                *Campo obrigatório. Informe uma data de nascimento.
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="mb-2">Definir Papel</div>
-              <div class="row">
-
-                <div class="col-4">
-                  <input class="option-input checkbox" type="radio" id="papelutente" formControlName="roles" value="3"
-                    [checked]="true"> <label for="papelutente">Utente</label>
-                </div>
-
-                <div class="col-4">
-                  <input class="option-input checkbox" type="radio" id="papelmotorista" formControlName="roles"
-                    value="2">
-                  <label for="papelmotorista">Motorista</label>
-                </div>
-                <div class="col-4">
-                  <input class="option-input checkbox" type="radio" id="papeladmin" value="1" formControlName="roles">
-                  <label for="papeladmin">Administrador</label>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="">
-          <div class="card-body card-block">
-            <!-- <div class="form-group">
-                        <label for="street" class=" form-control-label">Foto do Motorista</label>
-                        <input formControlName="imagem" (change)="readphoto($event.target.files)" type="file" id="street" placeholder=""
-                            class="form-control-file">
-                    </div> -->
-
-            <div formGroupName="morada">
-              <div class="row">
-                <div class="col-6">
-
-                  <div class="form-group">
-                    <label for="company" class=" form-control-label">Municipio</label>
-                    <select class="form-control" formControlName="municipio_id"
-                      [ngClass]="{ 'form-msg-errors-input': (fm.municipio_id.errors?.required == true) && ((fm.municipio_id.dirty == true) || (fm.municipio_id.touched == true)) }">
-                      <option (change)="pesquisaBairro()" *ngFor="let municipio of municipios" value="{{municipio.id}}">
-                        {{municipio.nome}}</option>
-                    </select>
-                    <div class="text-danger form-msg-errors"
-                      *ngIf="(fm.municipio_id.errors?.required == true) && ((fm.municipio_id.dirty == true) || (fm.municipio_id.touched == true))">
-                      *Campo obrigatório. Informe o nº do BI/Passaporte
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="vat" class=" form-control-label">Bairro</label>
-                    <input type="text" id="bairro" formControlName="bairro" placeholder="Bairro" class="form-control"
-                      [ngClass]="{ 'form-msg-errors-input':  (fm.bairro.errors?.required == true) && ((fm.bairro.dirty == true) || (fm.bairro.touched == true)) }">
-                    <div class="text-danger form-msg-errors"
-                      *ngIf="(fm.bairro.errors?.required == true) && ((fm.bairro.dirty == true) || (fm.bairro.touched == true))">
-                      *Campo obrigatório. Informe um bairro
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="street" class=" form-control-label">Rua</label>
-                    <input formControlName="rua" type="text" id="street" placeholder="Insira o Numero da Rua"
-                      class="form-control">
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="house" class=" form-control-label">Nº Casa</label>
-                    <input formControlName="numero_casa" type="text" id="house" placeholder="Insira Numeri da Casa"
-                      class="form-control">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div formGroupName="usuario" class="form-group">
-              <label for="email" class=" form-control-label">Email</label>
-              <input formControlName="email" type="mail" id="email" placeholder="Insira  o Email" class="form-control"
-                [ngClass]="{ 'form-msg-errors-input': ((fu.email.errors?.required == true) || (fu.email.errors?.email == true)) && ((fu.email.dirty == true) || (fu.email.touched == true))  }">
-              <div class="text-danger form-msg-errors"
-                *ngIf="((fu.email.errors?.required == true) || (fu.email.errors?.email == true)) && ((fu.email.dirty == true) || (fu.email.touched == true))">
-                <div *ngIf="(fu.email.errors?.email == true)">
-                  *Campo obrigatório. Informe um email válido.
-                </div>
-                <div *ngIf="(fu.email.errors?.required == true)">
-                  *Campo obrigatório.
-                </div>
-
-
-              </div>
-            </div>
-
-
-            <div formArrayName="contactos" class="form-group">
-              <label for="company" class=" form-control-label">Telefone</label>
-              <div class="row itens-align-start">
-                <div class="col-10">
-                  <div *ngFor="let contacto of contacto.controls; let i = index" class="mb-2">
-                    <div formGroupName="{{i}}">
-                      <div>
-
-                        <input
-                          [ngClass]="{ 'form-msg-errors-input': (f.contactos.controls[i].controls.contacto.errors?.required == true) && ((f.contactos.controls[i].dirty == true) || (f.contactos.controls[i].touched == true)) }"
-                          formControlName="contacto" type="text" id="company" placeholder="Insira o Numero do Telefone"
-                          class="form-control" [textMask]="{mask: mask.telefone}">
-                        <span *ngIf="i > 0" (click)="removeContacto(i)" class="btn-remove-contact pe-7s-close"></span>
-                        <input formControlName="tipo" type="hidden" value="Telefone">
-                        <div
-                          *ngIf="(f.contactos.controls[i].controls.contacto.errors?.required == true ) && ((f.contactos.controls[i].controls.contacto.dirty == true) || (f.contactos.controls[i].controls.contacto.touched == true))"
-                          class="text-danger form-msg-errors">
-                          *Campo obrigatório. Informe o numero de telefone
-                        </div>
-
-                      </div>
-
-
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="col-2">
-                  <div class="col-2 plus-phone-buttom">
-                    <span style="font-size: 2.2em; cursor: pointer;" (click)="addContacto()" span
-                      class="pe-7s-plus"></span>
-                  </div>
-                </div>
-              </div>
-
+              *ngIf="(fm.municipio_id.errors?.required == true) && ((fm.municipio_id.dirty == true) || (fm.municipio_id.touched == true))">
+              *Campo obrigatório. Informe o municipio
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-12">
-        <div class="card-body card-block">
 
-          <button type="submit" [disabled]="!usuario.valid" class="btn btn-lg btn-success mb-4">Guardar</button>
-
+        <div class="col-6">
+          <div class="form-group">
+            <label for="vat" class=" form-control-label">Bairro</label>
+            <input type="text" id="bairro" formControlName="bairro" placeholder="Bairro" class="form-control"
+            [ngClass]="{ 'form-msg-errors-input':  (fm.bairro.errors?.required == true) && ((fm.bairro.dirty == true) || (fm.bairro.touched == true)) }">
+            <div class="text-danger form-msg-errors"
+            *ngIf="(fm.bairro.errors?.required == true) && ((fm.bairro.dirty == true) || (fm.bairro.touched == true))">
+            *Campo obrigatório. Informe um bairro
+          </div>
         </div>
       </div>
-    </form>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="street" class=" form-control-label">Rua</label>
+          <input formControlName="rua" type="text" id="street" placeholder="Insira o Numero da Rua"
+          class="form-control">
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label for="house" class=" form-control-label">Nº Casa</label>
+          <input formControlName="numero_casa" type="text" id="house" placeholder="Insira Numeri da Casa"
+          class="form-control">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div formGroupName="usuario" class="form-group">
+    <label for="email" class=" form-control-label">Email</label>
+    <input formControlName="email" type="mail" id="email" placeholder="Insira  o Email" class="form-control"
+    [ngClass]="{ 'form-msg-errors-input': ((fu.email.errors?.required == true) || (fu.email.errors?.email == true)) && ((fu.email.dirty == true) || (fu.email.touched == true))  }">
+    <div class="text-danger form-msg-errors"
+    *ngIf="((fu.email.errors?.required == true) || (fu.email.errors?.email == true)) && ((fu.email.dirty == true) || (fu.email.touched == true))">
+    <div *ngIf="(fu.email.errors?.email == true)">
+      *Campo obrigatório. Informe um email válido.
+    </div>
+    <div *ngIf="(fu.email.errors?.required == true)">
+      *Campo obrigatório.
+    </div>
 
 
+  </div>
+</div>
 
-    <div>
+
+<div formArrayName="contactos" class="form-group">
+  <label for="company" class=" form-control-label">Telefone</label>
+  <div class="row itens-align-start">
+    <div class="col-10">
+      <div *ngFor="let contacto of contacto.controls; let i = index" class="mb-2">
+        <div formGroupName="{{i}}">
+          <div>
+
+            <input
+            [ngClass]="{ 'form-msg-errors-input': (f.contactos.controls[i].controls.contacto.errors?.required == true) && ((f.contactos.controls[i].dirty == true) || (f.contactos.controls[i].touched == true)) }"
+            formControlName="contacto" type="text" id="company" placeholder="Insira o Numero do Telefone"
+            class="form-control" [textMask]="{mask: mask.telefone}">
+            <span *ngIf="i > 0" (click)="removeContacto(i)" class="btn-remove-contact pe-7s-close"></span>
+            <input formControlName="tipo" type="hidden" value="Telefone">
+            <div
+            *ngIf="(f.contactos.controls[i].controls.contacto.errors?.required == true ) && ((f.contactos.controls[i].controls.contacto.dirty == true) || (f.contactos.controls[i].controls.contacto.touched == true))"
+            class="text-danger form-msg-errors">
+            *Campo obrigatório. Informe o numero de telefone
+          </div>
+
+        </div>
 
 
+      </div>
     </div>
 
   </div>
+
+  <div class="col-2">
+    <div class="col-2 plus-phone-buttom">
+      <span style="font-size: 2.2em; cursor: pointer;" (click)="addContacto()" span
+      class="pe-7s-plus"></span>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="col-12">
+  <div class="card-body card-block">
+
+    <button type="submit" [disabled]="!usuario.valid" class="btn btn-lg btn-success mb-4">Cadastrar</button>
+
+  </div>
+</div>
+</form>
+
+
+
+<div>
+
+
+</div>
+
+</div>
 
 </div>

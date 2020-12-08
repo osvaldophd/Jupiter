@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MotoristaService } from 'src/app/services/motorista.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FuncionarioService } from '../../services/funcionario.service';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-motoristas',
@@ -19,13 +20,19 @@ export class MotoristasComponent implements OnInit {
   public enderecoIMG: string = environment.IMGS;
   motoristaAux: any;
   slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
+  loading: boolean = true;
+  mensagem: string = "Carregando Motoristas";
 
   constructor(private motoristaService: FuncionarioService) { }
 
   ngOnInit() {
     // busca a esca todos os funcionario
 
-    this.motoristaService.getMotorista().subscribe(
+    this.motoristaService.getMotorista().pipe(
+      finalize(()=> {
+        this.loading = false;
+      })
+    ).subscribe(
       (res) => {
         console.log(res);
         this.motoristaAll = res['data']['funcionarios'];

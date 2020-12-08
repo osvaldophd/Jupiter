@@ -15,6 +15,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ContaComponent } from './componentes/conta/conta.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FuncionarioComponent } from './funcionario.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,9 @@ import { FuncionarioComponent } from './funcionario.component';
     FuncionarioRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
     SlickCarouselModule,
-    TextMaskModule
+    TextMaskModule,
+    SharedModule
   ]
 })
 export class FuncionarioModule { }

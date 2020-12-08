@@ -16,27 +16,25 @@ export class ProfileComponent implements OnInit {
   me: Profile;
   data: any;
 
-  img = environment.API_PATH;
+  img = environment.API_PATH + 'uploads/funcionarios/';
 
   constructor(
-                private auth: AuthService,
-                private token: TokenService,
-                private route: Router,
-                private profileService: ProfileService
-              ) { }
+    private auth: AuthService,
+    private token: TokenService,
+    private route: Router,
+    private profileService: ProfileService
+  ) { }
 
   ngOnInit() {
-
-
     this.profileService.getAll()
-    .subscribe( (res: any ) => {
+      .subscribe((res: any) => {
 
-      this.me = res;
-    });
+        this.me = res;
+      });
 
     this.data = localStorage.getItem('boleia-app-data');
 
-    
+
 
   }
 

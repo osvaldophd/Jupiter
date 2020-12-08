@@ -8,18 +8,24 @@
 //   apiKey: '50dd93c6b8d5aed5e9495c45b70c3fe8',
 //   API: 'http://127.0.0.1:8000/api',
 //   IMGS: 'http://localhost/api-juber/public/',
-//   path: 'http://127.0.0.1:8000'
+//   path: 'http://127.0.0.1:8000',
+//   keyCookie: 'token',
+//   urlTorenRedirect: 'http://localhost:4000/login'
 // };
 
 export const environment = {
-  URLAPI: 'http://mickantonio2020-001-site1.btempurl.com/api',
+  URLAPI: 'http://boleia2020-001-site1.ftempurl.com/api',
   production: false,
   apiKey: '50dd93c6b8d5aed5e9495c45b70c3fe8',
   apiUrl: 'http://api.openweathermap.org/data/2.5',
   tokemAPI: "",
-  API: 'http://mickantonio2020-001-site1.btempurl.com/api',
-  IMGS: 'http://mickantonio2020-001-site1.btempurl.com/',
-  path: 'http://mickantonio2020-001-site1.btempurl.com/'
+  API: 'http://boleia2020-001-site1.ftempurl.com/api',
+  IMGS: 'http://boleia2020-001-site1.ftempurl.com',
+  path: 'http://boleia2020-001-site1.ftempurl.com',
+  domain: '.darioandrade.eti.br',
+  keyCookie: 'token',
+  keyToken: 'usuario',
+  urlTorenRedirect: 'http://dashboard.academiajupiter.com.br/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

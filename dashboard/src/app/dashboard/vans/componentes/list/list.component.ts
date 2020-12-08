@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VansService } from '../../services/vans.service';
-import { ListVans } from '../../models/listVans.model';
 import { environment } from 'src/environments/environment';
-
-import { Pipe, PipeTransform } from '@angular/core';
 import { ResponseVans } from '../../models/vans';
 import { Van } from '../../../vans/models/vans';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -24,7 +21,7 @@ export class ListComponent implements OnInit {
   arraySubscription: Array<Subscription> = new Array<Subscription>();
   loading: boolean = true;
 
-  constructor(private vansservice: VansService) { 
+  constructor(private vansservice: VansService) {
 
     // this.api_path = this.api_path+"images/vans/";
 

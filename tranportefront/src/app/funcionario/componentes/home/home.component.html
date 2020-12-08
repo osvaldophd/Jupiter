@@ -1,53 +1,59 @@
 <div class="section-page jbg-white">
-  <div class="container">
+    <div class="container">
 
-    <div class="row hero">
-      <div *ngIf="motorista; else elseBlock " class=" col-sm-12 col-md-4">
-        <article class="driver row" >
-          <figure class="picture">
-            <img src="{{ enderecoIMG }}{{ motorista.funcionario.imagem }}" />
-          </figure>
-          <h2 class="texto-centro row w-100 justify-content-center">{{ motorista.funcionario.nome }}</h2>
-          <p *ngIf="motorista.funcionario.contactos[0]" class="texto-centro">
-            {{ motorista.funcionario.contactos[0].contacto }}
-          </p>
-          <p *ngIf="motorista.funcionario.contactos[1]" class="texto-centro">
-            {{ motorista.funcionario.contactos[1].contacto }}
-          </p>
+        <div class="row hero">
+            <div *ngIf="motorista; else elseBlock " class=" col-sm-12 col-md-4">
+                <article class="driver row">
+                    <figure class="picture">
+                        <img src="{{ enderecoIMG }}/uploads/funcionarios/{{ motorista.funcionario.imagem }}" />
+                    </figure>
+                    <h2 class="texto-centro row w-100 justify-content-center">{{ motorista.funcionario.nome }}</h2>
+                    <p *ngIf="motorista.funcionario.contactos[0]" class="texto-centro">
+                        {{ motorista.funcionario.contactos[0].contacto }}
+                    </p>
+                    <p *ngIf="motorista.funcionario.contactos[1]" class="texto-centro">
+                        {{ motorista.funcionario.contactos[1].contacto }}
+                    </p>
 
-        </article>
+                </article>
+            </div>
+
+            <div *ngIf="motorista" class="col-sm-12 col-md-4">
+                <header>
+                    <h3 class="cor-preta jcolor-secondary">Escala de Hoje</h3>
+                </header>
+                <ul class="lista-escala-home  list-group list-group-flush">
+
+                    <li class="list-group-item" *ngFor="let funcEscal of funcionarioEscala" (click)="mudarMotorista(funcEscal)" [ngClass]="(funcEscal.id == active)? 'activo ' : ' ' ">
+                        <a routerLinkActive="active">{{ funcEscal.funcionario.nome | uppercase }} </a>
+                    </li>
+
+                </ul>
+            </div>
 
 
-      </div>
-      <div *ngIf="motorista" class="col-sm-12 col-md-4">
-        <header>
-          <h3 class="cor-preta jcolor-secondary">Escala de Hoje</h3>
-        </header>
-        <ul class="lista-escala-home  list-group list-group-flush">
+            <ng-template #elseBlock>
+                <div *ngIf="loading; else naoexistescala" class="col-md-8">
+                    <app-loading [mensagem]="mensagem"></app-loading>
+                </div>
 
-          <li  class="list-group-item" *ngFor="let funcEscal of funcionarioEscala" (click)="mudarMotorista(funcEscal)" [ngClass]="(funcEscal.id == active)? 'activo ' : ' ' " >
-            <a routerLinkActive="active"  >{{ funcEscal.funcionario.nome | uppercase }} </a>
-          </li>
+                <ng-template #naoexistescala>
+                    <div class="col-md-8">
+                        <h1 class="texto-center jcolor-secondary">Não existe escala para hoje</h1>
+                    </div>
+                </ng-template>
 
-        </ul>
-      </div>
+            </ng-template>
 
-      
-      <ng-template #elseBlock>
-        <div class="col-md-8">
-          <h1 class="texto-center jcolor-secondary">Não existe escala para hoje</h1>
+            <section class="col-sm-12 col-md-4 pl-5 pr-0">
+                <div class="weather">
+                    <app-previsao-tempo></app-previsao-tempo>
+                </div>
+
+            </section>
         </div>
-      </ng-template>
 
-      <section class="col-sm-12 col-md-4 pl-5 pr-0">
-        <div class="weather">
-          <app-previsao-tempo></app-previsao-tempo>
-        </div>
-
-      </section>
     </div>
-
-  </div>
 
 
 </div>

@@ -2,10 +2,9 @@ import { Component, OnInit, ChangeDetectorRef, Output , EventEmitter} from '@ang
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { HeaderComponent } from '../header/header.component';
 import { SwalService } from 'src/app/services/swal.service';
-import { Route, Router } from '@angular/router';
 import { ShareContaService } from '../../services/share-conta.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-conta',
@@ -24,6 +23,8 @@ export class ContaComponent implements OnInit {
     apiPath: string = environment.IMGS;
     formedit: boolean = false;
     msg: boolean = false;
+    loading: boolean = true;
+    mensagem: string = "Carregando dados";
 
 
     
@@ -76,6 +77,10 @@ export class ContaComponent implements OnInit {
         return this.formgroup.get('contactos') as FormArray;
     }
 
+    removeContacto(contacto){
+        this.contacto.removeAt(contacto);
+    }
+
     ngOnInit() {
 
         this.getUser();
@@ -114,7 +119,13 @@ export class ContaComponent implements OnInit {
 
     getUser() {
 
-        this.usuarioService.getUsuario().subscribe(
+        this.usuarioService.getUsuario()
+        .pipe(
+            finalize(()=> {
+                this.loading = false;
+            })
+        )
+        .subscribe(
             (resp) => {
 
                 console.log(resp);
@@ -140,8 +151,8 @@ export class ContaComponent implements OnInit {
                 
                 this.shareconta.actualiza.next(true);
                 
-                this.usuarioPhoto = this.apiPath+''+resp.funcionario.imagem;
-                this.usuarioPhotoEdit = this.apiPath+''+resp.funcionario.imagem;
+                this.usuarioPhoto = this.apiPath+"/uploads/funcionarios/"+resp.funcionario.imagem;
+                this.usuarioPhotoEdit = this.apiPath+"/uploads/funcionarios/"+resp.funcionario.imagem;
                 this.formgroup.patchValue(setform);
 
 
@@ -172,6 +183,7 @@ export class ContaComponent implements OnInit {
             },
             contactos: this.formgroup.get('contactos').value,
         };
+
         this.usuarioService.update(+this.usuario.funcionario.id, dados).subscribe(
             (res) => {
                 this.getUser();

@@ -1,44 +1,48 @@
-
-<section class="mt-5 jbg-sinza pb-5">
+<section class="mt-4 jbg-sinza pb-5">
     <div class="container pb-5">
         <div class="h1 jcolor-primary  col-12 py-5 text-center ">Motoristas</div>
-        <div class=""  *ngIf="motoristaAll; else elseBlock ">
-            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"
-                (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
-                (beforeChange)="beforeChange($event)">
-    
-                <div ngxSlickItem *ngFor="let slide of motoristaAll" class="slide col-md-4">
-                    <div class="card-motorista">
-                        <header class="card-motorista-header">
-                            <img src="{{ enderecoIMG }}{{ slide.imagem }}" alt="" >
-                        </header>
-                        <section class="card-motorista-body">
-                            <h2 class="card-motorista-title" *ngIf="slide.nome">{{ slide.nome }}</h2>
-                            <p *ngIf="slide.matricula" class="texto-centro">{{ slide.matricula }}</p>
-                            <p  *ngFor="let xcontactos of slide.contactos">
-                                <i class="fas  icon-pequeno" [ngClass]="(xcontactos.tipo == 'telemovel')? 'fa-phone-alt' : 'fa-envelope'"></i>
-                                {{ xcontactos.contacto }}
-                            </p>
-                        </section>
-                    </div>
-    
-                </div>
-    
-    
-            </ngx-slick-carousel>
+
+        <div *ngIf="loading; else mostramotoristas">
+            <app-loading [mensagem]="mensagem"></app-loading>
         </div>
 
-        <ng-template #elseBlock>
-            <div class="row justify-content-center">
-                <div class="col-6">
-                    <h1 class="h1 text-center jcolor-secondary mt-5 pt-5">Não existem Motoristas disponíves!</h1>
-            
-                  </div>
+        <ng-template #mostramotoristas>
+            <div class="" *ngIf="motoristaAll; else elseBlock ">
+                <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)" (beforeChange)="beforeChange($event)">
+
+                    <div ngxSlickItem *ngFor="let slide of motoristaAll" class="slide col-md-4">
+                        <div class="card-motorista">
+                            <header class="card-motorista-header">
+                                <img src="{{ enderecoIMG }}/uploads/funcionarios/{{ slide.imagem }}" alt="">
+                            </header>
+                            <section class="card-motorista-body">
+                                <h2 class="card-motorista-title" *ngIf="slide.nome">{{ slide.nome }}</h2>
+                                <p *ngIf="slide.matricula" class="texto-centro">{{ slide.matricula }}</p>
+                                <p *ngFor="let xcontactos of slide.contactos">
+                                    <i class="fas  icon-pequeno" [ngClass]="(xcontactos.tipo == 'telemovel')? 'fa-phone-alt' : 'fa-envelope'"></i> {{ xcontactos.contacto }}
+                                </p>
+                            </section>
+                        </div>
+
+                    </div>
+
+
+                </ngx-slick-carousel>
             </div>
 
-          </ng-template>
-    
-    
+            <ng-template #elseBlock>
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <h1 class="h1 text-center jcolor-secondary mt-5 pt-5">Não existem Motoristas disponíves!</h1>
+
+                    </div>
+                </div>
+
+            </ng-template>
+        </ng-template>
+
+
+
     </div>
-    
-    </section>
+
+</section>

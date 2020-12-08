@@ -8,7 +8,10 @@ import { TokenService } from '../services/token.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router, private token: TokenService) {}
+  constructor(
+    private router: Router,
+    private token: TokenService,
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -17,8 +20,7 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(): boolean {
-
-    if(this.token.verifyToken()){
+    if (this.token.verifyToken()) {
       return true;
     } else {
       this.router.navigate(['/login']);

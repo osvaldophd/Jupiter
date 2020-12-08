@@ -1,9 +1,7 @@
-
-  .card--img img{
-    width: 100%;
+.card--img img {
+  width: 80%;
+  margin: 3% 10%;
+}
+.card--img {
+       height: 130px;
     }
-    .card--img {
-       height: 200px;
-    }
-
-    

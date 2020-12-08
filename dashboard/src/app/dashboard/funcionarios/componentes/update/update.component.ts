@@ -1,3 +1,4 @@
+import { MunicipiosService } from 'src/app/dashboard/services/municipios.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FuncionariosService } from '../../services/funcionarios.service';
 import { ActivatedRoute } from '@angular/router';
@@ -25,6 +26,7 @@ export class UpdateComponent implements OnInit {
   submitted: boolean;
   loading: boolean = true;
   api_path = environment.API_IMG;
+  municipios: any;
 
 
   mask = {
@@ -38,7 +40,8 @@ export class UpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private swal: SwalService
+    private swal: SwalService,
+    private municipiosService: MunicipiosService
   ) {
     this.formgroup = this.fb.group({
       nome: ['', Validators.required],
@@ -53,12 +56,13 @@ export class UpdateComponent implements OnInit {
         name: [''],
         email: ['', [Validators.required, Validators.email]],
         password: [''],
-        roles: ['', Validators.required]
+        roles: ['', Validators.required],
+        id: ['']
       }),
       contactos: this.fb.array([
         this.fb.group({
           contacto: ['', Validators.required],
-          tipo: [''],
+          tipo: ['Telefone'],
           id: ['']
         })
       ]),
@@ -74,6 +78,45 @@ export class UpdateComponent implements OnInit {
 
   }
 
+  // Fim do metodo usado para fazer o upload do usuario
+  ngOnInit() {
+   this.pesquisaMunicipios();
+
+    this.userService.getById(+(this.route.snapshot.params.id)).pipe(
+      finalize(() => {
+        this.loading = false;
+      })
+    )
+      .subscribe(
+        (res: Funcionario) => {
+          this.user = res;
+          this.user = this.user.data.funcionario[0];
+          this.roles = this.user.usuario.roles;
+          const imagem = this.api_path + 'uploads/funcionarios/' + this.user.imagem;
+          const telefones: Array<any> = this.user.contactos || [];
+          this.uploaded = imagem;
+          this.user.imagem = null;
+          this.formgroup.patchValue(this.user);
+          this.contacto.clear();
+          telefones.forEach(data => {
+            this.contacto.push(
+              this.fb.group({
+                contacto: [data.contacto, Validators.required],
+                tipo: ['Telefone'],
+                id: [data.id]
+              })
+
+            )
+          })
+
+
+        },
+        (error) => {
+
+        }
+      );
+  }
+
   // Metodo que retorna o campo contacto no template
   get contacto() { return this.formgroup.get('contactos') as FormArray; }
 
@@ -85,10 +128,9 @@ export class UpdateComponent implements OnInit {
 
     this.submitted = true;
     var role: any = this.formgroup.get('usuario').get('roles').value;
-    role = ( typeof role ==  'object')? role[0].id : role
+    role = (typeof role == 'object') ? role[0].id : role
 
     const dados: createFuncionario = {
-
       nome: this.formgroup.get('nome').value,
       nacionalidade: this.formgroup.value.nacionalidade,
       genero: this.formgroup.value.genero,
@@ -96,7 +138,13 @@ export class UpdateComponent implements OnInit {
       nr_bi: this.formgroup.value.nr_bi,
       nif: this.formgroup.value.nr_bi,
       imagem: this.fileData,
-      usuario: this.formgroup.value.id,
+      usuario: {
+        id: this.user['usuario'].id,
+        name: this.formgroup.value.nome,
+        email: this.formgroup.value.usuario.email,
+        password: 'test1234',
+        roles: [role]
+      },
       contactos: this.formgroup.value.contactos,
       morada: {
         rua: this.formgroup.value.morada.rua,
@@ -104,7 +152,7 @@ export class UpdateComponent implements OnInit {
         numero_casa: this.formgroup.value.morada.numero_casa,
         municipio_id: this.formgroup.value.morada.municipio_id
       },
-       
+
       roles: [role]
 
     };
@@ -112,12 +160,15 @@ export class UpdateComponent implements OnInit {
 
     this.userService.update(+this.route.snapshot.params.id, dados).subscribe(
       (res) => {
-        this.swal.swalTitleText('Sucesso', `Dados do colaborador ${dados.nome} alterado com sucesso`, 'success');
-        
+        if (res['message'] === 'funcionario_actualizada_com_succeso')
+          this.swal.swalTitleText('Sucesso', `Dados do colaborador ${dados.nome} alterado com sucesso`, 'success');
+        else
+          this.swal.swalTitleText('Editar Colaborador', `Erro! Não foi possivel alterar os dados`, 'error');
+
       },
       (error) => {
         this.swal.swalTitleText('Editar Colaborador', `Erro! Não foi possivel alterar os dados`, 'error');
-        
+
       }
     );
 
@@ -137,59 +188,19 @@ export class UpdateComponent implements OnInit {
 
   }
 
-  // Fim do metodo usado para fazer o upload do usuario
-
-  ngOnInit() {
-
-    this.userService.getById(+(this.route.snapshot.params.id)).pipe(
-      finalize(()=> {
-        this.loading = false;
-      })
-    )
-      .subscribe(
-        (res: Funcionario) => {
-          this.user = res;
-          
-          this.user = this.user.data.funcionario[0];
-          this.roles = this.user.usuario.roles;
-          const imagem = this.api_path + this.user.imagem;
-          const telefones: Array<any> = this.user.contactos || [];
-          this.uploaded = imagem;
-
-          this.user.imagem = null;
-          this.formgroup.patchValue(this.user);
-          this.contacto.clear();
-          telefones.forEach( data => {
-            this.contacto.push(
-              this.fb.group({
-                contacto: [data.contacto, Validators.required],
-                tipo: [''],
-                id: [data.id]
-              })
-
-            )
-          })
-
-
-        },
-        (error) => {
-          
-        }
-      );
-  }
-
   addContacto() {
 
     this.contacto.push(
       this.fb.group({
-        contacto: ['', Validators.required]
+        contacto: ['', Validators.required],
+        tipo: ['Telefone'],
       })
     );
   }
 
   verifyRoles(items: Array<any>, value: number): boolean {
     var r: boolean = false
-    if (items) { items.find(elemento => { if (elemento.id == value) {r = true; } })  } return r;
+    if (items) { items.find(elemento => { if (elemento.id == value) { r = true; } }) } return r;
   }
 
   removeContacto(item) {
@@ -197,10 +208,29 @@ export class UpdateComponent implements OnInit {
 
   }
 
+  pesquisaMunicipios() {
+    this.municipiosService.getMunicipios().pipe(
+      finalize(()=> {
+        this.loading = false;
+      })
+    ).subscribe(
+      (res) => {
+        this.municipios = res;
+        this.municipios = this.municipios.municipios;
 
+      },
+      (error) => {
 
+      }
+    )
+  }
 
+  verificaMunicipio(item: number){
 
+  }
 
+  pesquisaBairro(){
+
+  }
 
 }

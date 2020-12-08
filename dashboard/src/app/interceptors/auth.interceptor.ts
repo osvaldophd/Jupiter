@@ -1,3 +1,4 @@
+import { MessageService } from './../shared/services/mensage.service';
 import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
@@ -13,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   keyToken = environment.keyToken;
 
-  constructor(private swalService: SwalService) {
+  constructor(private swalService: SwalService, private messageService: MessageService) {
 
   }
 
@@ -29,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(newReq);
     }
     if (!token) {
-      this.swalService.swalItervalRedirect('Atenticação de Usuário', 'A sua sessão expirou', 1000, true, '/login');
+      this.messageService.mensageRedirect('Atenticação de Usuário', 'A sua sessão expirou', 1000, true, '/login');
     }
 
     return next.handle(req);

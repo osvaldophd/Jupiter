@@ -10,14 +10,14 @@
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Tags: html, themplate, Ela Admin
 --------------------------------------------------------- */
-/* 
+/*
 
 // Hannibal Styles
 
 
 Googel Fonts  */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
-/* Googel Fonts End  
+/* Googel Fonts End
 
 */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
@@ -135,11 +135,11 @@ Googel Fonts  */
 .mb-15 {
   margin-bottom: 15px; }
 
-/* 
+/*
 
 
 Googel Fonts  */
-/* Googel Fonts End  
+/* Googel Fonts End
 
 */
 .bg-flat-color-1 {
@@ -1335,7 +1335,7 @@ header .form-inline {
     width: 40%; }
   .card .card-body {
     float: left;
-    padding: 1.25em;
+    padding: 1.0em;
     position: relative;
     width: 100%; }
   .card h4 {
@@ -2474,7 +2474,7 @@ footer.site-footer {
     overflow: hidden; }
 
   .order-table .avatar, .order-table .serial {
-    display: none; } 
+    display: none; }
 }
 @media (max-width: 575px) {
   .user-admin-name {
@@ -2493,7 +2493,7 @@ footer.site-footer {
     width: 220px;
     padding-bottom: 5px; }
   .right-panel .menutoggle {
-    width: 20px; } 
+    width: 20px; }
 }
 #cellPaiChart {
   height: 160px; }
@@ -2591,7 +2591,7 @@ a, a:hover {
 }
 
 
-.calendar-motorista { 
+.calendar-motorista {
   padding: 10px 0;
   margin-bottom: -5px;
 }
@@ -2605,7 +2605,7 @@ a, a:hover {
 .calenday-dia {
   font-size: .8em;
 }
-.form-control { 
+.form-control {
   border: 1px solid #dddbdd !important;
   border-radius: 2px !important;
 }
@@ -2622,6 +2622,6 @@ a, a:hover {
 
 body {
   font-family: 'Roboto', sans-serif !important;
-  //background-color: red;
+/* background-color: red; */
 }
 
